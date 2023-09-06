@@ -1,0 +1,136 @@
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+.footerLogoLink {
+    opacity: 0.5;
+    transition: opacity var(--ifm-transition-fast) var(--ifm-transition-timing-default);
+}
+
+.footerLogoLink:hover {
+    opacity: 1;
+}
+
+.footerPadding {
+    margin-bottom: 10vh;
+}
+
+.editButtonContainer {
+    margin: 0 auto;
+    width: Min(1350px, 90%);
+    position: relative;
+}
+
+.footerLinksContainer {
+    display: flex;
+    width: Min(1350px, 90%);
+    margin: 54px auto 48px auto;
+    align-items: flex-start;
+    @apply z-10;
+}
+
+.footerLinkCol {
+    width: auto;
+    margin-right: 110px;
+    color: white;
+}
+
+.footerLink {
+    margin-bottom: 0.5rem;
+}
+
+.footerBottom {
+    display: flex;
+    flex-grow: 1;
+    width: Min(1350px, 90%);
+    margin: auto;
+    align-items: center;
+    @apply z-10;
+}
+
+.legalContainer {
+    display: flex;
+    flex-direction: row-reverse;
+    flex-grow: 1;
+    justify-content: flex-end;
+}
+
+.legalLinkContainer {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    margin: auto 1rem;
+}
+
+.legalLink {
+    margin: auto 1rem;
+}
+
+.mediaLinksContainer {
+    display: flex;
+    flex-grow: 1;
+    justify-content: flex-end;
+    align-items: center;
+    @apply z-10;
+}
+
+.mediaLinks {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto 0.5rem;
+    color: white;
+    position: relative;
+}
+
+.mediaLinks img {
+    display: flex;
+}
+
+.mediaLinks img:hover {
+    opacity: 0.8;
+}
+
+.container {
+    background-color: white;
+    position: relative;
+}
+
+@media screen and (max-width: 996px) {
+    .footerLinksContainer {
+        display: block;
+    }
+
+    .footerLinkCol {
+        width: 100%;
+    }
+
+    .footerBottom {
+        display: block;
+    }
+
+    .legalContainer {
+        display: block;
+    }
+
+    .mediaLinksContainer {
+        margin-top: 3rem;
+        justify-content: flex-start;
+        @apply z-10;
+    }
+
+    .legalCopyright {
+        margin-bottom: 0.5rem;
+    }
+
+    .legalLink {
+        margin-left: 0;
+    }
+
+    .legalLinkContainer {
+        margin-left: 0;
+    }
+}

@@ -1,0 +1,215 @@
+---
+
+title: Motoko update December 9, 2022
+description: The languages team is back with a second weekly update to keep you guys in sync with what we’re working on for Motoko.
+tags: [New features]
+image: /img/blog/motoko-1.png
+authors:
+  - name: Kento Sugama
+---
+# Motoko 更新日：2022年12月9日
+
+![Motoko](../_assets/motoko-1.png)
+
+Motoko 開発者の皆さん、こんにちは、
+
+Motoko
+ 
+ 前回の投稿は[こちらで](https://forum.dfinity.org/t/highlight-post-new-motoko-features-in-dfx-0-12/17027)ご覧いただけます。
+
+復習として、前回は新しいレコード拡張構文、拡張バッファクラス、そして`dfx` の次のリリースで登場する
+世代別 GC について話しました。
+
+![Garbage collector](../_assets/gc-1.png)
+
+# コレクタはMotoko プレイグラウンドで利用可能になりました！
+
+新しい世代ガベージコレクタ (GC) が
+[Motoko プレイグラウンドに](https://m7sm4-2iaaa-aaaab-qabra-cai.raw.icp0.io/)デプロイされました (@chenyan に感謝します)！新しいシステムを
+で試したいと思っているなら、`dfx` の次のバージョンで正式にリリースされる前に試すのに最適な方法です。
+
+備考として、世代ガベージコレクションはMotoko プログラムの
+ヒープ空間をより効率的に管理し、クリーニングすることができます。これは主に、canisters のcycle コストを削減し、特に重い計算でcycle メッセージごとの
+制限を回避するのに役立ちます。
+
+私たちの内部テストでは、この新しいガベージコレクタは、ほとんどの状況で既存の2つのコレクション
+戦略よりもパフォーマンスが高いことが示されていますが、@luc-blaeser (この新機能の担当チームメンバー) は、実際の
+世界のメトリクスに興味があります。ベンチマークやストレステストに興味がある方はMotoko 、この新しいコレクション戦略を
+のcanisters に投げてみて、何か興味深いメトリクスがあれば送ってください :)
+
+![Async / Await](../_assets/asyncawait.png)
+
+## ティーザー: 効率的な非同期await
+
+Motoko に新しい機能を追加します:`async*` と`await*` ！
+
+この新しい型と演算子は、canister メッセージを送信することなく（そして
+実行を中断してスケジューラを経由することなく）、非同期コードを抽象化することができます！
+
+この機能はまだ`dfx` には搭載されていませんが、プレイグラウンドと`moc` の最新リリースでは利用可能です。
+
+例
+
+例：2つの数値を割り算し、和を2倍にして答えを返す関数があるとします。また、
+ canister がこの関数を他のcanisters が呼び出せるように公開し、非同期型を持っているとします。
+
+    public func foo(number1 : Nat, number2 : Nat) : async Nat {
+      if (number2 == 0) {
+        throw Error.reject "Cannot divide by zero";
+      };
+      (number1 / number2) * 2
+    };
+
+さて、ややこしい例ですが、除算とエラーチェックをヘルパー
+関数に取り出したいとしましょう。不幸なことが起こります。
+
+    func divide(number1 : Nat, number2 : Nat) : async Nat {
+      if (number2 == 0) {
+        throw Error.reject "Cannot divide by zero";
+      };
+      number1 / number2
+    };
+    
+    public func foo(number1 : Nat, number2 : Nat) : async Nat {
+      (await divide(number1, number2)) * 2
+    };
+
+`divide` 関数がローカルのヘルパーであるにもかかわらず、`async` 型で宣言しないと reject を投げることができないのです。
+つまり、この関数が呼び出され、その結果が`await`ed on されると、canister は実際に実行を一時停止し、この呼び出しを呼び出すために
+メッセージを（自分自身に...）送信します。特にこのような非同期呼び出しが多い場合は、あまり効率的ではありません。
+
+でも大丈夫。すべてに`*` 。あとはコンパイラがやってくれます。
+
+    func divide(number1 : Nat, number2 : Nat) : async* Nat {
+      if (number2 == 0) {
+        throw Error.reject "Cannot divide by zero";
+      };
+      number1 / number2
+    };
+    
+    public func foo(number1 : Nat, number2 : Nat) : async Nat {
+      (await* divide(number1, number2)) * 2
+    };
+
+これで、ヘルパーはローカルで呼び出され、非同期関数からヘルパーへのコードの引き出しによるパフォーマンスへの打撃はなくなります！
+
+注：この機能には、これまで説明したことよりももう少し詳細があります。一言で言えば、この機能はコンテキスト
+の切り替えを回避しますが、その代償としてコミットポイントが少なくなります。
+このトレードオフと、この機能とあなたが慣れ親しんでいる`async` /`await` との違いに注意してください。
+この新機能に関するユーザーからのフィードバックを集めながら、Motoko の将来のバージョンで変更を加えるかもしれません。
+ディスカッションの全容をご覧になりたい場合は、[こちらを](https://github.com/dfinity/motoko/pull/3609)ご覧ください。
+
+## それではまた次回！
+
+また機能とアップデートをお届けします :slight\_smile：
+
+\-DFINITY 言語チーム
+
+<!---
+
+
+
+# Motoko update: December 9, 2022
+![Motoko](../_assets/motoko-1.png)
+
+Hey Motoko devs,
+
+The languages team is back with a second weekly update to keep you guys in sync with what we’re working on for Motoko.
+You can check out our previous
+post [here](https://forum.dfinity.org/t/highlight-post-new-motoko-features-in-dfx-0-12/17027).
+
+As a recap, last time we talked about the new record extension syntax, extended buffer class, and teased the
+generational GC that will be coming in the next release of `dfx`.
+
+![Garbage collector](../_assets/gc-1.png)
+# Collector now available on the Motoko playground!
+
+The new generational garbage collector (GC) has been deployed to
+the [Motoko playground](https://m7sm4-2iaaa-aaaab-qabra-cai.raw.icp0.io/) (thanks to @chenyan)! If you’re curious to try
+out the new system, this is a great way to try it out before the official release in the next version of `dfx`.
+
+As a reminder, generational garbage collection allows more efficient management and cleaning of your Motoko program’s
+heap space. This helps, primarily, with reducing cycle costs for your canisters and avoiding the cycle limit per message
+on particularly heavy computation.
+
+Our internal testing shows that this new garbage collector is more performant than the existing two collection
+strategies in most situations, but @luc-blaeser (the team member responsible for this new feature) is interested in real
+world metrics. If you're interested in benchmarking and stress-testing Motoko, throw this new collection strategy at
+your canisters and send us any metrics you find interesting :)
+
+![Async / Await](../_assets/asyncawait.png)
+## Teaser: efficient async await
+
+We are adding a new feature to Motoko: `async*` and `await*`!
+
+This new type and operator lets you abstract out asynchronous code without having to send an inter-canister message (and
+thus suspend execution and go through the scheduler)!
+
+This feature is not yet shipped with `dfx`, but is available on the playground and the most recent release of `moc`.
+
+Example:
+
+Let’s say you have a function that divides two numbers, doubles the sum, and returns the answer. Let’s also assume that
+your canister publicly exposes this function for other canisters to call, and so it has an asynchronous type.
+
+```
+public func foo(number1 : Nat, number2 : Nat) : async Nat {
+  if (number2 == 0) {
+    throw Error.reject "Cannot divide by zero";
+  };
+  (number1 / number2) * 2
+};
+```
+
+Now, for the sake of convoluted examples, let’s say you want to pull out the division and the error checking to a helper
+function. Something unfortunate happens.
+
+```
+func divide(number1 : Nat, number2 : Nat) : async Nat {
+  if (number2 == 0) {
+    throw Error.reject "Cannot divide by zero";
+  };
+  number1 / number2
+};
+
+public func foo(number1 : Nat, number2 : Nat) : async Nat {
+  (await divide(number1, number2)) * 2
+};
+```
+
+Even though the `divide` function is a local helper, it needs to be declared with an `async` type to throw the reject.
+This means that when it is called and the result is `await`ed on, the canister actually pauses execution and sends a
+message (to itself…) to invoke this call. Not very efficient, especially if you have a lot of async calls like this.
+
+But it’s okay. Just add a `*` to everything. The compiler will take care of the rest.
+
+```
+func divide(number1 : Nat, number2 : Nat) : async* Nat {
+  if (number2 == 0) {
+    throw Error.reject "Cannot divide by zero";
+  };
+  number1 / number2
+};
+
+public func foo(number1 : Nat, number2 : Nat) : async Nat {
+  (await* divide(number1, number2)) * 2
+};
+```
+
+Now, the helper is called locally, and you take no performance hit for pulling out code from async functions to helpers!
+
+Note: There is a bit more detail to this feature than what we covered so far. In a nutshell, this feature avoids context
+switches at the expense of less commit points; your code may behave differently with traps and concurrent messages.
+Please be mindful of this tradeoff and difference between this feature and the `async` / `await` that you are used to.
+As we gather feedback on this new feature from users, we may make changes in future versions of Motoko. If you want to
+see the full discussion, you can check it out [here](https://github.com/dfinity/motoko/pull/3609).
+
+## See you next time!
+
+We'll be back with more features and updates :slight_smile:
+
+– DFINITY Languages team
+
+
+
+-->

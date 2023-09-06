@@ -1,0 +1,204 @@
+---
+
+title: Developer weekly update July 12, 2023
+description: This week, we’re going to talk about the new vetKeys feature that was showcased in a community conversation this week, plus a new dfx release and a new optimization feature packaged with dfx.
+tags: [Devs]
+image: /img/blog/dev-update-blog-jul-12.jpeg
+---
+# デベロッパーウィークリー - 2023年7月12日号
+
+![July 12 2023](../../static/img/blog/dev-update-blog-jul-12.jpeg)
+
+開発者の皆さん、こんにちは！今週は、今週コミュニティの会話で紹介されたvetKeysの新機能と、dfxの新リリース、そしてdfxにパッケージされた新機能canister の最適化についてお話します！
+
+さあ、飛び込みましょう！
+
+## vetKeys
+
+今週、vetKeysという新機能がコミュニティの会話を通じて紹介されました！
+
+Verifiable Encrypted Threshold Keys（略称：vetKeys）は、Internet Computer 。 vetKeysの目的は、開発者がIC上でセキュリティやプライバシーのツールを使用する際に直面する課題を軽減することです。デバイス上でローカルに情報を暗号化し、ブロックチェーンに保存することは、暗号化の秘密鍵の値が公開されず、ローカルデバイスに残っている限り、簡単です。ユーザーが暗号化された情報を別のデバイスから取り出したり、別のユーザーと共有したりしたい場合、安全である簡単な方法はありません。
+
+vetKeysは、ICのネイティブ署名スキームであり、暗号解読キーとして使用できるBLS署名を活用することで、この課題の解決に努めます。BLS署名はIC上で分散して計算されるため、ユーザーに代わって鍵を割り当てたり管理したりする中央機関は存在しません。
+
+vetKeysの背後にある技術をより詳しく見るには、[vetKeysの入門](https://internetcomputer.org/blog/features/vetkey-primer)書をご覧ください。
+
+vetKeysのユースケースは以下の通りですが、これらに限定されるものではありません：
+
+- エンドツーエンドの暗号化
+- 洗練されたアクセス・ポリシー
+- ブロックチェーン発行の署名とクロスチェーンブリッジ
+- 検証可能なランダム性
+- 「デッドマンズ・スイッチ
+- 秘密入札オークションとMEV保護
+- タイムロック暗号化
+- 証人の暗号化
+- ワンタイムプログラム
+
+これはまだ制作中の新機能であるため、この機能を強化し、さまざまなユースケースを検討するために、開発者が参加できる懸賞金が多数用意されています。報奨金の詳細とコミュニティの会話へのリンクは、[こちらのフォーラム投稿を](https://forum.dfinity.org/t/open-bnt-8-vetkeys-enabling-privacy-preserving-applications-on-the-ic/21294)ご覧ください。
+
+## dfx 0.14.2
+
+最新リリースのdfx 0.14.2では、主に以下のような既存のワークフローの修正と機能強化が行われました：
+
+- 重複アセットの診断とアップグレードステップの表示:`dfx deploy` が`dist/` とフロントエンド`assets/` ディレクトリで重複アセットを検出した場合、アップグレードステップを提案するようになりました。
+- Motoko canisters サービスコンストラクタで他のcanisters をインポートできます: 特定のcanister ビルダーが Wasm ファイルと Candid ファイルを出力した後、dfx は Candid ファイルの後処理を行います。
+- `dfx star` `dfx.json` または のネットワークレプリカポートの設定を尊重するようになりました。`networks.json`
+- `.raw.ic0.app` からのリダイレクトが`.icp0.io` ではなく`.ic0.app` にリダイレクトされるようになりました。
+- `validate_commit_proposed_batch()` メソッドの呼び出しにパーミッションが不要になりました。
+- アセットcanister がアップロード中に制限を実施するようになりました。これらの制限はすでにアップロードされたアセットには適用されません。
+- index.html フォールバックルートの正しい expr\_path を返すように修正されました。以前は、リクエストされたパスが`index.html` フォールバックルートの`expr_path` を構築するために使用されていました。この場合、`expr_path` は`index.html` ファイル自体のパスになるはずなので、これは正しくありません。
+
+さらに、このリリースに含まれる新機能は以下のとおりです：
+
+- `dfx bootstrap` と`dfx replica` コマンドの非推奨化: この2つのコマンドの組み合わせである`dfx start` を代わりに使用してください。
+- canisters アセットのカスタムビルドコマンドの追加 : カスタムビルドコマンドは`dfx.json` でカスタムタイプcanisters と同じように設定できます。このコマンドが指定されない場合、dfx はデフォルトの`npm run build` コマンドにフォールバックします。
+
+<!-- end list -->
+
+    {
+      "canisters": {
+        "ui": {
+          "type": "assets",
+          "build": ["<custom build command>"]
+        }
+      }
+    }
+
+dfx 0.14.2のリリースノート全文は[こちらを](https://github.com/dfinity/sdk/releases/tag/0.14.2)ご覧ください。
+
+## Canister dfx 0.14.0 以降で利用可能な最適化
+
+dfx 0.14.0以降のバージョンでは、汎用のWasmオプティマイザである`wasm-opt` が追加されました。`wasm-opt` を使用すると、dfx.json ファイルから直接、canister の最適化オプションを設定できるようになりました。たとえば、canisterのcycles 消費を最適化するには、この設定を使用します：
+
+```
+{
+  "canisters": {
+    "my_canister": {
+      "optimize": "cycles"
+    }
+  }
+}
+
+```
+
+また、バイナリ・サイズを小さくすることもできます：
+
+```
+{
+  "canisters": {
+    "my_canister": {
+      "optimize": "size"
+    }
+  }
+}
+
+```
+
+ベンチマークテストの結果、cycle の消費量はMotoko canisters で約 10%、Rustcanisters で約 7%、バイナリサイズは約 16% 削減されます。
+
+詳細については、[こちらのフォーラム・ポスト・アナウンスを](https://forum.dfinity.org/t/canister-optimizer-available-in-dfx-0-14-0/21157)ご覧ください。
+
+今週は以上です！NNSチームを取り上げた先週の[チーム・スポットライト・ブログ記事を](https://internetcomputer.org/blog/news-and-updates/team-spotlight-nns)見逃した方は、ぜひご覧ください。次回はRuntimeチームを取り上げます！
+
+\-DFINITY
+
+<!---
+
+
+
+# Developer weekly - July 12 2023
+
+![July 12 2023](../../static/img/blog/dev-update-blog-jul-12.jpeg)
+
+Hello devs and welcome to this week’s issue of developer weekly! This week, we’re going to talk about the new vetKeys feature that was showcased in a community conversation this week, plus a new dfx release and a new feature packaged with dfx: canister optimization!
+
+Let’s dive in!
+
+## vetKeys
+This week, a new feature was presented to our community via a community conversation: vetKeys! 
+
+Verifiable Encrypted Threshold Keys (shortened to vetKeys) are a new feature that enables a number of cryptographic functions and use-cases on the Internet Computer. The purpose of vetKeys is to help mitigate some of the challenges that developers face when using security and privacy tools on the IC. Encrypting information locally on a device and storing it on a blockchain is easy, as long as the encryption’s secret key value is not exposed and remains on the local device. If a user wants to retrieve the encrypted information from another device or share it with another user, there isn’t a straightforward way that is secure.
+
+vetKeys strives to resolve this challenge, as it leverages the BLS signatures, which are the native signature scheme on the IC and can be used as cryptographic decryption keys. Since BLS signatures are computed in a distributed manner on the IC, there is no central authority that is assigning or managing keys on the behalf of users. 
+
+For a more in-depth look at the technology behind vetKeys, check out the [vetKeys primer](https://internetcomputer.org/blog/features/vetkey-primer).
+
+Use-cases for vetKeys include, but are not limited to:
+- End-to-end encryption.
+- Sophisticated access policies.
+- Blockchain-issues signatures and cross-chain bridges.
+- Verifiable randomness.
+- “Dead man’s switch”.
+- Secret-bid auctions and MEV protection.
+- Time-lock encryption.
+- Witness encryption.
+- One-time programs.
+
+Since this is a new feature still in production, there are a number of bounties available for developers to participate in to help enhance the feature and explore different use-cases. For more information on the bounties and a link to the community conversation, check out [this forum post](https://forum.dfinity.org/t/open-bnt-8-vetkeys-enabling-privacy-preserving-applications-on-the-ic/21294).
+
+## dfx 0.14.2
+The newest release of dfx 0.14.2 primarily provided fixes and enhancements for existing workflows, such as:
+- Diagnose duplicate assets and display upgrade steps: if `dfx deploy` detects duplicate assets in the `dist/` and frontend `assets/` directories, it will now suggest upgrade steps.
+- Motoko canisters can import other canisters with service constructor: after a specific canister builder outputs the Wasm and Candid files, dfx will do some post processing on the Candid file.
+- `dfx star`t now respects the network replica port configuration in `dfx.json` or `networks.json`
+- The redirect from `.raw.ic0.app` now redirects to `.ic0.app` instead of `.icp0.io`.
+- The `validate_commit_proposed_batch()` method no longer requires any permission to call.
+- The asset canister now enforces limits during upload. These limits do not apply to assets already uploaded.
+- A fix to the return of the correct expr_path for index.html fallback routes: previously, the requested path was used to construct the `expr_path` for the `index.html` fallback route. This was incorrect, as the `expr_path` should be the path of the `index.html` file itself in this case.
+
+Additionally, new features included in this release include:
+- The deprecation of the `dfx bootstrap` and `dfx replica` commands: please use `dfx start` instead, which is a combination of the two commands.
+- An addition of optional custom build command for asset canisters: the custom build command can be set in `dfx.json` the same way it is set for custom type canisters. If the command is not provided, dfx will fallback to the default `npm run build` command.
+
+```
+{
+  "canisters": {
+    "ui": {
+      "type": "assets",
+      "build": ["<custom build command>"]
+    }
+  }
+}
+```
+
+The full release notes for dfx 0.14.2 can be found [here](https://github.com/dfinity/sdk/releases/tag/0.14.2).
+
+## Canister optimization available in dfx 0.14.0 and newer 
+
+A new feature now packaged in versions of dfx 0.14.0 and newer includes `wasm-opt`, a general purpose Wasm optimizer. With `wasm-opt`, you can now configure canister optimization options straight from the dfx.json file. For example, to optimize a canister’s cycles consumption, you can use the configuration:
+
+```
+{
+  "canisters": {
+    "my_canister": {
+      "optimize": "cycles"
+    }
+  }
+}
+
+```
+
+Or, you can reduce binary size with the configuration:
+
+```
+{
+  "canisters": {
+    "my_canister": {
+      "optimize": "size"
+    }
+  }
+}
+
+```
+
+After some benchmark testing, our team estimates that you can expect to see cycle consumptions reduced by around 10% for Motoko canisters and 7% for Rust canisters, and binary size reduction by around 16%. 
+
+For more details, check out the full [forum post announcement here](https://forum.dfinity.org/t/canister-optimizer-available-in-dfx-0-14-0/21157). 
+
+That’s it for this week! If you missed last week’s [team spotlight blog post](https://internetcomputer.org/blog/news-and-updates/team-spotlight-nns) that featured the NNS team, be sure to check it out. For the next installment of the team spotlight series, we’ll dive into the Runtime team; be sure to check in next week for that! 
+
+-DFINITY
+
+
+-->

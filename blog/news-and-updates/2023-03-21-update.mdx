@@ -1,0 +1,125 @@
+---
+
+title: Motoko update March 21, 2023
+description: Today, we're excited to delve into a newly released threshold canister and some fascinating benchmarking reports!
+tags: [New features]
+image: /img/blog/motoko-logo-white.webp
+authors:
+  - name: Kento Sugama
+---
+# Motoko 更新日：2023年3月21日
+
+![Motoko](../_assets/motoko-logo-white.webp)
+
+Motoko こんにちは！👋
+
+最新のMotoko アップデート記事へようこそ！
+
+前回のアップデートを見逃してしまった方も、
+[。](https://forum.dfinity.org/t/new-let-binding-and-serialization-improvements-motoko-updates/18850)革新的な`let-else` バインディングの
+と Candid デシリアライゼーションの大幅な改善について説明しました。
+
+本日は、新しくリリースされた thresholdcanister といくつかの魅力的なベンチマークレポートについてご紹介します！
+
+## Motoko threshold : オープンソースで準備が整いました！canister
+
+![Motoko](../_assets/voting.webp)
+
+私たちは、[thresholdcanister](https://github.com/dfinity/threshold)がオープンソースになり、
+あなたのプロジェクトで利用できるようになったことを発表できることに興奮しています！この強力なcanister は、プリンシパルのグループが簡単に民主的な決定を下すことを可能にします。
+参加者は、特定の
+しきい値の票を集めることを条件に、希望する行動に基づいてコールを実行する提案を提出することができます。
+
+実際のアプリケーションでは、閾値canister は、最近
+分散化された OpenChat SNS におけるDFINITY'の投票委任を、DFINITY 財団内の個人に効率化しています。このアプローチは、
+の投票力をさらに分散化するだけでなく、一個人の損失や無力化が財団全体の投票力
+の損失につながらないことを保証します。canister がオープンソースになったことで、あなたの組織も同じ委任
+機能の恩恵を受けることができます！
+
+わずか200行のMotoko で構成されたこのcanister は、簡潔な
+と堅牢なコードを作成するためのMotoko のユニークな利点を例証しています。最初の署名者リスト
+を使ってデプロイすることで、あなたのユースケースに共有閾値投票スキームを自由に採用することができます。公開リポジトリにあるこのcanister に関するフィードバックを歓迎します。
+
+## Canister-プロファイリング：ICcanister の性能の秘密を明らかにします。
+
+![Motoko](../_assets/race-track.webp)
+
+IC 上のデータ構造のパフォーマンス、あるいは言語全体やcanisters のパフォーマンスを比較したいですか？
+[canister ](https://github.com/dfinity/canister-profiling)-profiling リポジトリをご覧ください。
+
+このリポジトリでは、ベンチマークごとのcycle の使用量を見ることができます（README の "Performance" セクションにリンクされています）。さらに、
+パフォーマンス・レポートには、cycles が
+費やされている場所の詳細な視覚化を提供するフレームグラフへのリンクがあります。ベンチマークスコアの取得に使用したおもちゃのDAOのグラフの例を見てください：
+![Motoko](../_assets/canister-profiling.webp)
+
+これらのベンチマークは、Motoko だけでなく、Rust で書かれたものを含むすべてのcanister に適用されます。
+
+この強力なツールをあなた自身のcanister 開発に活用するために、カスタム・ベンチマークを含む[PR を](https://github.com/dfinity/canister-profiling/pulls)遠慮なく提出してください。
+
+いつものように、私たちは私たちのツールに関するフィードバックを大切にしています。ありがとうございました！
+
+## 次回まで！
+
+これからも探求を続け、さらなるアップデートにご期待ください！
+
+\-DFINITY 言語チーム
+
+<!---
+
+
+# Motoko update: March 21, 2023
+![Motoko](../_assets/motoko-logo-white.webp)
+
+Hello Motoko devs! 👋
+
+Welcome back to the latest Motoko update post, where we have some engaging news to share with you!
+
+If you happened to miss our previous update, don't worry, you can catch
+up [here](https://forum.dfinity.org/t/new-let-binding-and-serialization-improvements-motoko-updates/18850). We discussed
+the innovative `let-else` binding and significant improvements to Candid deserialization.
+
+Today, we're excited to delve into a newly released threshold canister and some fascinating benchmarking reports!
+
+## Motoko threshold canister: open-source and ready to go!
+![Motoko](../_assets/voting.webp)
+
+We're thrilled to announce that the [threshold canister](https://github.com/dfinity/threshold) is now open-source and
+available for your projects! This powerful canister enables groups of principals to make democratic decisions with ease.
+Participants can submit proposals to execute calls based on desired behavior, provided the proposal garners a specific
+threshold of votes.
+
+In a real-world application, the threshold canister is already streamlining DFINITY's vote delegation in the recently
+decentralized OpenChat SNS to individuals within the DFINITY Foundation. This approach not only further decentralizes
+voting power but also ensures the loss or incapacitation of a single individual won't result in the loss of voting power
+for the entire foundation. With the canister now open-source, your organization can benefit from the same delegation
+capabilities!
+
+Composed of a mere 200 lines of Motoko, this canister exemplifies the unique advantage of Motoko for crafting concise
+and robust code. Feel free to adopt a shared threshold voting scheme for your use-case by deploying with an initial
+signers list. We welcome any feedback you have on this canister in the public repository.
+
+## Canister-profiling: uncover the secrets of IC canister performance
+![Motoko](../_assets/race-track.webp)
+
+Eager to compare data structure performance on the IC, or perhaps the performance of entire languages or canisters? Look
+no further than our [canister-profiling](https://github.com/dfinity/canister-profiling) repository.
+
+There, you'll find cycle usage per benchmark (linked under the "Performance" section of the README). Additionally,
+performance reports feature links to flamegraphs that provide detailed visualizations of where your cycles are being
+spent. Take a look at this example graph for a toy DAO we use to obtain benchmark scores:
+![Motoko](../_assets/canister-profiling.webp)
+
+These benchmarks apply not just to Motoko, but to any canister, including those written in Rust.
+
+Feel free to submit [PRs](https://github.com/dfinity/canister-profiling/pulls) containing custom benchmarks to utilize
+this powerful tool for your own canister development.
+
+As always, we value your feedback on our tools, so please file GitHub issues for any requests. Thank you!
+
+## Till next time!
+
+Keep exploring, and stay tuned for more updates!
+
+– DFINITY Languages team
+
+-->

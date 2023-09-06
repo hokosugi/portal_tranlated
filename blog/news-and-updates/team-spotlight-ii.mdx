@@ -1,0 +1,149 @@
+---
+
+title: Team spotlight - Internet Identity
+description: Welcome to this installment of team spotlight. This week, the have a very exciting team to dive into - the Internet Identity team!
+tags: [Team spotlight]
+image: /img/blog/dev-update-blog-internet-id.jpg
+---
+![Internet Identity Team spotlight](../../static/img/blog/dev-update-blog-internet-id.jpg)
+
+開発者の皆さん、こんにちは！チームスポットライトへようこそ。今週は、インターネット・アイデンティティ・チームです！デジタルアイデンティティのための最先端のツールを開発するチームとして、彼らの使命と焦点は個人的に大好きです。さっそく始めましょう！
+
+**はじめに、インターネット・アイデンティティ・チームのミッションは何ですか？**
+
+*II チームは、II プロトコルと UI の実装、改良、メンテナンスを担当しています。さらに、私たちはIIの継続的な進化も任務としており、ICエコシステムやそれ以外でのIIの使用を促進するために、社内外のすべての利害関係者と協力しています。私たちの使命の一環として、規格に基づいたアプローチで幅広いコミュニティと関わり、IIのヘビーユーザーであるdapp チームと話をしたり、プレゼンテーションを行ったり、ワークショップを開催したりするアウトリーチを実施することで、コアユーザーエクスペリエンスを常に改善しています。*
+
+**Internet Identityチームの構成を教えてください。**
+
+*チームは4人のエンジニア、Nicolas、Frederik、Bartosz、David、プロダクトマネージャーのMary、UIデザイナーのArtemで構成されています。*
+
+**Internet Identity以外に、チームが貢献している製品や機能はありますか？**
+
+*Internet Identityチームは[Identity & Wallet Standards Working Groupを率いて](https://github.com/dfinity/wg-identity-authentication)おり、Internet Computer 上のアイデンティティとウォレットに関連するICRC規格の開発と採用に取り組んでいます。現在、IC上のウォレット用の標準化された同意メッセージインターフェースである[RFP-7で](https://forum.dfinity.org/t/assigned-rfp-7-wallet-standard-reference-implementation/20024) [AirGapと](https://airgap.it/)協力しています。*
+
+**これらの協力は非常にエキサイティングなようで、その結果を見たいと思っています！インターネット ID は、クリプトウォレットやその他のデジタル ID と比較してどうですか?その特徴は何ですか？**
+
+*Internet Identityは、完全にオンチェーンでありながら、dapps にサインインする便利で安全な方法を提供します。トランザクション署名フローを（まだ）提供していないため、古典的なクリプトウォレットではあり ません。むしろ、Google や Facebook などのシングインのような、古典的な Web 2.0 ログインに匹敵します。IIの主な強みは、使いやすさと高いセキュリティであり、鍵管理やその他のWeb 3.0の複雑さでユーザーに負担をかけないことです。*
+
+**これは、IIと他の形態のデジタルIDの違いを表現する素晴らしい方法だと思います。インターネット・アイデンティティの開発でチームが直面した最大の課題は何ですか？**
+
+*私たちは小さなチームなので、頻繁に変更をリリースし、フィードバックに対応することができます。このような小さなチームでこれだけのものを提供できるのは、本当にやりがいのあることです。*
+
+**Internet Identityを使用する開発者のオンボーディングにおける摩擦や困難に対して、チームはどのように対応しましたか？**
+
+*Internet Identityの[特別な開発ビルドを](https://github.com/dfinity/internet-identity#flavors)作成し、ローカルの開発環境でIIを非常に簡単に使用できるようにしました。さらに、開発ビルドの使い方を紹介する[ステップバイステップの例を](https://github.com/dfinity/examples/tree/master/motoko/internet_identity_integration)作成しました。将来的には、`dfx deps` コマンドもサポートする予定です。*
+
+**オンボーディングの摩擦を軽減するための改善がなされたと聞いて、とても嬉しく思います。開発者からのフィードバックの結果、改善された点はありますか？**
+
+- *開発者エクスペリエンスの改善です：昨年のMotoko ブートキャンプの後、Nicolas と Frederick は、Seb Thuillier から II をローカルにセットアップする際の経験についてのフィードバックを集めました。このフィードバックをもとに、Frederick と Nicolas は II の開発者向けドキュメントを更新し、開発者が II を一から作り直さずに済むようにしました。*
+
+- * dapps エクスプローラ経由で Internet Identity と統合するdapps にユーザを接続：Internet Identityに接続すると、統合されたdapps のリストが表示されま す。このリストは、エコシステムプロジェクトの貴重な情報を提供し、ユーザーにとって 有意義なCTAを提供します。プロジェクトがdapp エクスプローラでdapp を見たい場合は、[ここで PR](https://github.com/dfinity/portal#showcase-submission-guidelines)を提出できます。*
+
+- *Internet Identity へのオンボーディングを 3 つの簡単なステップで完了（以前は 10 ステップ）：dapps 、新規ユー ザーのオンボーディングと認証に Internet Identity を利用している企業から、Internet Identity の作成プロセスを簡素化してほしいという要望がありました。Internet Identity の作成に必要なステップ数を 10 から 3 に減らし、dapps へのユーザのオンボーディングを容易にしました。*
+
+**これは驚くべき改善であり、開発者コミュニティは大いに恩恵を受けていると確信しています！Internet Identityチームが現在取り組んでいる主なプロジェクトは何ですか？**
+
+*現在、以下のプロジェクトに注力しています：*
+
+- *検証可能なクレデンシャル、別名属性共有：これは、暗号化プロトコルを使用することで、IC上で実行されるさまざまなアプリケーションが、安全でプライバシーを保持する方法で、ユーザー属性を互いに共有できるようになることを意味します。*
+
+- *非パスキー認証：パスキーの使用が不可能なユーザ（例えば、iCloudアカウントを持たないiPhoneユーザ）のために、別の認証メカニズムを提供することを意味します。*
+
+- *各プリンシパルのジェネレーティブベースの II ロゴ：II ロゴを再設計し、各インターネッ ト ID プリンシパルは、ジェネレーティブベースの独自のロゴを持つようになりました！*
+
+**個人的には、ジェネレーティブベースのIIロゴのアイデアが大好きです！Internet Identityの最新アップデートはどこで確認できますか？**
+
+*Internet Identityの最新アップデートについては、フォーラムをご覧ください。*
+
+**Internet Identityの将来に予定されている主なロードマップは何ですか?**
+
+- *ICRC-21規格のサポート：[フォーラムへの投稿](https://forum.dfinity.org/t/assigned-rfp-7-wallet-standard-reference-implementation/20024)。*
+- *WalletConnect v2 規格の統合。*
+
+**チームが最も誇りに思っているインターネット ID の機能や側面は何ですか?**
+
+*IIの最もクールな特徴の1つは、完全にオンチェーンでありながら、安全でプライバシーを保護する認証を提供し、実際に使いやすく便利であるという事実です。これらの利点が1つの製品に統合されていることは、私たちが本当に誇りに思っていることであり、Web 3.0のエコシステムならではのものです。*
+
+**このことは、IIチームにとって非常に勉強になり、見識が深まりました！最後に、DFINITY の他の開発チームと比較して、Internet Identity チームの特徴を教えてください。**
+
+*Internet Identityチームは、DFINITY の数少ないチームの1つで、エコシステムの開発者が使用したり構築したりするためのAPIだけでなく、ユーザー向けの製品も開発しています。*
+
+これで今週のチームスポットライトは終わりです！Internet Identityの将来について素晴らしい情報を得ることができましたが、皆さんも私と同じようにロードマップの項目を楽しみにしていてください！
+
+それではまた次回！
+
+\-DFINITY
+
+<!---
+
+
+![Internet Identity Team spotlight](../../static/img/blog/dev-update-blog-internet-id.jpg)
+
+Greetings developers! Welcome to this installment of team spotlight. This week, we have a very exciting team to dive into: the Internet Identity team! As the team behind developing one of the most cutting-edge tools for digital identities, their mission and focus is a personal favorite. Without further adieu, let's get started!
+
+**To get started, what is the mission of the Internet Identity team?**
+
+*The II team is responsible for the implementation, refinement and maintenance of the II protocol and UI. Additionally, we are also tasked with the continuous evolution of II and we work with all of the internal and external stakeholders in order to promote the use of II in the IC ecosystem and beyond. As part of our mission, we constantly improve the core user experience by taking a standards-based approach to engage with the broader community and conduct outreach by talking to dapp teams that are heavy users of II, giving presentations, and organizing workshops.*
+
+**What is the composition of the Internet Identity team?**
+
+*The team consists of 4 engineers, Nicolas, Frederik and Bartosz and David, our product manager, Mary and our UI designer Artem.*
+
+**Other than Internet Identity, are there any other products or features that the team contributes to?**
+
+*The Internet Identity team leads the [Identity & Wallet Standards Working Group](https://github.com/dfinity/wg-identity-authentication), which works towards the development and adoption of ICRC standards related to identity and wallets on the Internet Computer. We are currently collaborating with [AirGap](https://airgap.it/) on [RFP-7](https://forum.dfinity.org/t/assigned-rfp-7-wallet-standard-reference-implementation/20024), a standardized consent message interface for wallets on the IC.*
+
+**Those collaborations sound very exciting, I'm eager to see the result of those! How does Internet Identity compare to cryptowallets and other forms of digital identity? What makes it unique?**
+
+*Internet Identity offers a convenient and secure way to sign into dapps, while being fully on-chain. It is not a classical crypto wallet, as it does not offer a transaction signing flow (yet). It is more comparable to a classical Web 2.0 login, such as sing-in with Google, Facebook, etc. The main strengths of II are its ease of use and high security, while not burdening the user with key management and other Web 3.0 complexities.*
+
+**I think that is a great way to describe the difference between II and other forms of digital identities. What’s the biggest challenge the team has faced with developing Internet Identity?**
+
+*We are a small team, which enables us to release changes and respond to feedback frequently, but [that] also comes with limitations. It’s been really rewarding to be able to deliver so much with such a small team.*
+
+**How has the team handled or responded to developer onboarding friction or difficulties using Internet Identity?**
+
+*We have created a [special dev build](https://github.com/dfinity/internet-identity#flavors) of Internet Identity that makes working with II in a local dev environment very easy. In addition, we have created a [step-by-step example](https://github.com/dfinity/examples/tree/master/motoko/internet_identity_integration) showcasing how to use the dev build. In the future we also plan to support the `dfx deps` command.*
+
+**It's great to hear that improvements have been made to assist with onboarding friction. Are there any improvements have been made as a direct result of developer feedback?**
+
+- *Improved Developer Experience: After the Motoko bootcamps last year, Nicolas and Frederick gathered feedback from Seb Thuillier about the experience of setting up II locally. Using the feedback, Frederick and Nicolas updated the II developer docs so that developers could avoid rebuilding II from scratch.*
+
+- *Connecting users to dapps that integrate with Internet Identity via the dapps explorer: When you connect to Internet Identity, you’ll see a list of integrated dapps, which provides valuable exposure to ecosystem projects and meaningful CTAs for users. If a project wants to see its dapp on the dapp explorer, it can submit a [PR here.](https://github.com/dfinity/portal#showcase-submission-guidelines)*
+
+- *Onboarding to Internet Identity in three simple steps (was previously 10): dapps that rely on Internet Identity to onboard and authenticate new users requested that we simplify the process of creating an Internet Identity. We reduced the number of steps necessary to create an Internet Identity to three instead of 10, which should make onboarding users to dapps easier.*
+
+**Those are some incredible improvements, and I'm sure our dev community has benefited greatly from them! What is the primary project that the Internet Identity team is working on or focused on currently?**
+
+*Right now we are focused on the following projects:*
+
+- *Verifiable Credentials aka Attribute Sharing: this means that through the use of cryptographic protocols, different applications running on IC will be able to share user attributes between each other in a manner that is both secure and privacy-preserving.*
+
+- *Non-passkey authentication: this means that for users where the use of passkeys is not an option (e.g., iPhone users without an iCloud account), we are offering an alternative authentication mechanism.*
+
+- *Generative-based II logos for each Principal: we have redesigned the II logo and each Internet Identity Principal will now have its own individualized and generative-based logo!*
+
+**I personally love the idea of generative-based II logos, I think that'll be a great UI update! Where should developers look for the latest Internet Identity updates?**
+
+*Developers can look to the forum for the latest Internet Identity updates.*
+
+**What are some of the major roadmap items planned for the future of the Internet Identity?**
+
+- *Supporting the ICRC-21 standard: [forum post](https://forum.dfinity.org/t/assigned-rfp-7-wallet-standard-reference-implementation/20024).*
+- *Integrating WalletConnect v2 standard.*
+
+**What is one feature or aspect of Internet Identity that the team is the most proud of?**
+
+*One of the coolest features of II is the fact that it is fully on-chain while still offering secure and privacy preserving authentication that is actually easy and convenient to use. Having all these benefits combined in one single product is something we’re really proud of and that is unique to the Web 3.0 ecosystem.*
+
+**This has been incredibly educational and insightful into the II team! To wrap this up, what makes the Internet Identity team unique compared to some of the other dev teams at DFINITY?**
+
+*The Internet Identity team is one of the few teams at DFINITY that develops a user-facing product as well as APIs for ecosystem developers to use and build with.*
+
+That'll finish off this week's issue of team spotlight! We got some great information about the future of Internet Identity, and I hope everyone is as excited for the roadmap items as I am! 
+
+We'll see everyone next time!
+
+-DFINITY
+
+-->

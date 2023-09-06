@@ -1,0 +1,164 @@
+---
+
+title: Developer weekly update December 19, 2022
+description: We’re back with a third weekly update to keep you guys in sync with what we’re working on for Motoko and the Internet Computer SDK.
+tags: [New features]
+image: /img/blog/astronaut.png
+---
+# 開発者ウィークリー・アップデート：2022年12月19日
+
+![DFINITY](../_assets/astronaut.png)
+
+開発者の皆さん、こんにちは、
+
+私たちがMotoko と Internet
+Computer SDK 向けに取り組んでいることを皆さんにお伝えするため、3回目のウィークリー・アップデートをお届けします。前回の
+の記事は[こちらから](https://forum.dfinity.org/t/generational-gc-on-playground-and-new-async-await-weekly-motoko-updates/17270)ご覧いただけます。
+
+## Motoko: インタラクティブなコード・スニペットをMediumのストーリーやブログ記事に直接埋め込むことができます！
+
+![Header image](../_assets/medium.png)
+
+実行可能な[Motoko コード・スニペットを](https://embed.smartcontracts.org/) [Medium](https://medium.com/)
+ソーシャル・パブリッシング・プラットフォームに直接埋め込む新しいコラボレーションを発表できることを嬉しく思います。
+ Motoko 'のドキュメントをオーバーホールする継続的な取り組みの一環として、IC
+コミュニティの誰もがインターネット上でインタラクティブなチュートリアルやコード例を簡単に作成できるようにしたいと考えました。
+ 投稿の全文は[こちらから](https://forum.dfinity.org/t/embed-motoko-interactive-code-snippets-directly-in-your-medium-story-or-blog-post/17433)ご覧いただけます。
+
+## React Native \<-\>についてInternet Computer
+
+![Header image](../_assets/react-native.png)
+
+React Nativeは、開発者が
+JavaScriptとReactを使用してネイティブモバイルアプリケーションを構築できる人気のオープンソースフレームワークです。React Nativeを使用すると、開発者は、各プラットフォーム用に別々のコードベースを維持する必要なく、ネイティブアプリのように感じられ、
+、高品質のクロスプラットフォームアプリを作成できます。
+
+これまでReact Nativeでは、
+JavaScriptで暗号計算を実行するために必要なAPIのサポートが限られていました。しかし、BigIntサポートのリリースにより、
+ Internet Computer と直接通信するモバイルアプリの構築とデプロイが可能になりました！
+
+ここでは、agent-js (0.15)を使用した、パッチ不要のスターターテンプレートを用意しています！チェックして、
+ご意見をお聞かせください！あなたが作るものを見るのを楽しみにしています。
+
+## 基本ライブラリドキュメントの改善
+
+![Header image](../_assets/github-prs.png)
+
+チームはベースライブラリにテスト、ドキュメント、サンプルを追加する作業に懸命に取り組んでいます。現在、10近くの PR
+をオープンにしており、それぞれが重要なカバレッジを追加しています！
+
+この点については、以前からコミュニティが改善を求めており、
+しばらくの間、注意が払われていなかった分野のひとつであることは承知しています。個人的には、リアルタイムで編集可能な
+ドキュメントの各ブロックと一緒に、生きたコード・スニペットが見られることに興奮しています。世界最高の開発者コミュニティであることへのささやかな感謝のしるし（
+、そしておそらくホリデープレゼント）として受け取っていただければ幸いです。
+
+関係者の皆さんのたゆまぬ努力に脱帽です。
+
+貢献することに興味がある方は、どうぞ！
+Motoko コンパイラと基本ライブラリのドキュメンテーション
+プロジェクトを実行するためにマシンをセットアップする方法については、[こちらで](https://dirt-jaguar-6a2.notion.site/How-to-contribute-to-the-base-examples-d2761b204d5443d6b170d0dfe6a70591)説明しています。
+基本ライブラリは GitHub の[こちらで](https://github.com/dfinity/motoko-base)見つけることができます。
+
+## 今週のアプリFig
+
+![Header image](../_assets/fig.png)
+Fig は、CLI ツールやスクリプトに視覚的なオートコンプリートを追加できるアプリケーションです。私たちチームの何人かは、数週間前から
+を使っていますが、生産性が向上しています。ターミナルのためのOSのようなものです。
+
+以下は、私たちが気に入っている点のトップ3です：
+
+CLI のドロップダウンコマンドメニュー
+エイリアスと個人用ユーティリティスクリプトの統合
+`fig ai` - 自然言語を bash コマンドに翻訳。
+
+などなど。
+
+Figのダウンロードは[こちらから](https://fig.io/)。
+
+## それではまた次回！
+
+また機能とアップデートをお届けします :slight\_smile：
+
+\-DFINITY 言語チーム
+
+<!---
+
+
+# Developer weekly update: December 19, 2022
+
+![DFINITY](../_assets/astronaut.png)
+
+Hello devs,
+
+We’re back with a third weekly update to keep you guys in sync with what we’re working on for Motoko and the Internet
+Computer SDK. You can check out our previous
+post [here](https://forum.dfinity.org/t/generational-gc-on-playground-and-new-async-await-weekly-motoko-updates/17270).
+
+## Embed Motoko: interactive code snippets directly in your Medium story or blog post!
+![Header image](../_assets/medium.png)
+
+We are excited to announce a new collaboration which brings
+runnable [Motoko code snippets](https://embed.smartcontracts.org/) directly into the [Medium](https://medium.com/)
+social publishing platform.
+As a part of an ongoing effort to overhaul Motoko’s documentation, we wanted to make it easy for anyone in the IC
+community to create interactive tutorials and code examples across the Internet.
+You can see the full
+post [here](https://forum.dfinity.org/t/embed-motoko-interactive-code-snippets-directly-in-your-medium-story-or-blog-post/17433).
+
+## React Native <-> Internet Computer
+![Header image](../_assets/react-native.png)
+
+React Native is a popular open-source framework that allows developers to build native mobile applications using
+JavaScript and React. With React Native, developers can create high-quality, cross-platform apps that feel and perform
+like native apps, without the need to maintain separate code bases for each platform.
+
+Up until now, React Native had limited support for the necessary APIs to perform cryptographic computations in
+JavaScript. With the release of BigInt support however, it is now possible to build and deploy mobile apps that
+communicate directly with the Internet Computer!
+
+We have a starter template available for you here that uses agent-js (0.15) with no patches necessary! Check it out and
+let us know what you think! Looking forward to seeing what you build.
+
+## Improvements coming to base library documentation
+![Header image](../_assets/github-prs.png)
+
+The team has been hard at work adding tests, documentation, and examples to the Base Library. We now have nearly 10 PRs
+open that each add significant coverage!
+
+The community has been asking for improvements in this regard for some time, and we know it’s one area that has been
+starved of attention for a while. Personally, I’m excited to see live code snippets alongside every block of
+documentation that can be edited in real time. I hope that you will accept this as a small token of our appreciation (
+and perhaps a holiday gift) for being the best developer community in the world.
+
+Hats off to everyone involved for their tireless efforts.
+
+If you’re interested in contributing, please do! We have instructions for how to get your machine set up to run the
+Motoko compiler and base library documentation
+project [here](https://dirt-jaguar-6a2.notion.site/How-to-contribute-to-the-base-examples-d2761b204d5443d6b170d0dfe6a70591).
+You can find the base library on GitHub [here](https://github.com/dfinity/motoko-base).
+
+## App of the week: Fig
+![Header image](../_assets/fig.png)
+Fig is an application that lets you add visual autocomplete to any CLI tool or script. Some of us on the team have been
+using it for several weeks now, and it’s offered a nice boost to productivity. It’s like an OS for your terminal.
+
+Here are the top three things we love about it:
+
+dropdown command menu for CLI’s
+Consolidation of aliases and personal utility scripts
+`fig ai` - translate natural language into bash commands
+
+and much much more.
+
+You can download Fig [here](https://fig.io/).
+
+## See you next time!
+
+We'll be back with more features and updates :slight_smile:
+
+– DFINITY Languages team
+
+
+
+
+-->

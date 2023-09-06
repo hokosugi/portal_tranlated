@@ -1,0 +1,114 @@
+---
+
+title: Developer weekly update July 26, 2023
+description: In this week's issue, we're going to take a brief look at the new `dfx deps` subcommand, plus explore a new QR code example project that showcases deterministic time slicing. 
+tags: [Devs]
+image: /img/blog/dev-update-blog-jul-26.jpg
+---
+# デベロッパーウィークリー - 2023年7月26日
+
+![July 26 2023](../../static/img/blog/dev-update-blog-jul-26.jpg)
+
+開発者の皆さん、こんにちは！今号では、新しい`dfx deps` サブコマンドについて簡単に説明し、決定論的タイムスライスを紹介する新しい QR コード・サンプル・プロジェクトを探ります。
+
+準備はいいですか？
+
+## `dfx deps`
+
+`dfx deps` は新しいサブコマンドで、開発者がサードパーティの をメインネットから取得し、 への支払いや本番環境の使用を気にすることなく、統合機能をテストするためにローカルのレプリカにデプロイすることを可能にします。canisters cycles 
+
+`dfx deps` を使用するには、ワークフローに2つの役割があります。サービス・プロバイダーは、canister を「プル可能」に設定できます。つまり、`dfx deps` を使って他の人がプルできます。サービス・コンシューマーは、canister が「プル可能」に設定されていれば、メインネットからcanister をプルできます。
+
+このサブコマンドとワークフローについては、別のブログ記事でさらに詳しく説明しています。そのブログ記事は[こちら](https://internetcomputer.org/blog/features/dfx-deps)、対応する開発者向けドキュメントは[こちらを](https://internetcomputer.org/docs/current/developer-docs/setup/pulling-canister-dependencies)ご覧ください。
+
+## 新しいサンプルコードQRコードジェネレーター
+
+Runtime チームの Ulan Degenbaev 氏のおかげで、新しい Rust サンプルが`DFINITY/examples` リポジトリに追加されました。このサンプルは、IC上のdapps 、画像処理のような長時間実行する計算タスクを1回のメッセージ実行で実行できることを示しています。この機能は、Deterministic Time Slicing (DTS)によって実現されています。DTSは、長い計算タスクをより小さなスライスに分割し、複数のブロックにわたって実行するIC独自の機能です。この新機能を使用することで、開発者は通常と同じように長時間実行する計算コードを書くことができ、DTSの利点を活用するために特別なタスクを実行する必要はありません。
+
+この新しいサンプルコードでは、QRコード生成アプリケーションを使用してDTS機能をデモしています。このサンプルのライブバージョンは[こちらで](https://khpe2-4qaaa-aaaao-a2fnq-cai.icp0.io/)お試しいただけます。
+
+ローカルでサンプルを使いたい場合は、[こちらの](https://github.com/dfinity/examples/tree/master/rust/qrcode)サンプル・レポにコードがあります。
+
+### QRコード生成の仕組み
+
+このサンプルでは、`dfx new` コマンドで dfx の標準テンプレートからdapp コードを生成しています。
+
+フロントエンドcanister には、ユーザーがQRコードを設定するためのテキストフィールドを入力するフォームを含むHTMLウェブページが含まれています。そして、「生成！」ボタンは、JavaScriptハンドラを使用して、バックエンドcanister への呼び出しを開始します。バックエンド は、CandidインターフェースからJavaScriptオブジェクトを自動的に生成します。JavaScriptオブジェクトはバックエンドcanister の各エンドポイントに対して非同期関数を使用します。バックエンドエンドポイントは2つあり、1つは更新用、もう1つはクエリー用です。これは教育目的のために意図的に行われています。JavaScriptのボタンは、フロントエンドからバックエンドへの呼び出しに非同期関数を使用しています。
+
+このサンプルはRustで書かれており、`image` と`qrcode-generator` クレートを使っています。最終的に生成されたQRコードの画像結果にInternet Computer のロゴと配色を追加するために、ちょっとした画像処理も行われています。
+
+## `dfx deploy --playground`
+
+本日最後のトピックとして、今後の新機能を簡単にご紹介します。`dfx deploy --playground` ！
+
+`dfx deploy --playground` は、まもなくdfxで利用可能になる予定の機能です。この新しい フラグを使うと、 を プレイグラウンドに即座にデプロイできます。このフラグを使用すると、dfx プロジェクト内の が IC メインネットにデプロイされ、 の URL が開発者に返されます。このデプロイ方法によって、開発者は最初に ウォレットをセットアップしたり を取得したりすることなく、 をメインネットに素早くデプロイできます。これにより、開発者はすぐに dfx を使い始めることができ、開発者のオンボーディングプロセスを支援することができます。`--playground` canisters Motoko canisters canister cycles cycles canisters 
+
+`--playground` フラグでデプロイされたcanisters は、Motoko プレイグラウンドにデプロイされた他のcanisters と同じ制限を受けることに注意してください。これらの制限は以下の通りです：
+
+- Cycle 転送命令はシステムによって黙って無視されます。
+- Canisters 最大1GBの安定したメモリを使用できます。
+- Canisters コントローラにならずに自分自身を管理するために、管理 を呼び出すことができます。canister 
+- デプロイされたcanisters は20分後に失効します。
+
+この機能は近日公開予定で、今後のブログ記事でドキュメントを追加して詳しく説明します。その更新にご期待ください！
+
+今週はここまでです！来週のウィークリー・アップデートとチーム・スポットライト・シリーズをお楽しみに！
+
+\-DFINITY
+
+<!---
+
+
+
+# Developer weekly - July 26 2023
+
+![July 26 2023](../../static/img/blog/dev-update-blog-jul-26.jpg)
+
+Hello devs and welcome to this week’s issue of developer weekly! In this issue, we're going to take a brief look at the new `dfx deps` subcommand, plus explore a new QR code example project that showcases deterministic time slicing. 
+
+Ready to dive in?
+
+## `dfx deps`
+
+`dfx deps` is a new subcommand that allows developers to pull third-party canisters from the mainnet, then deploy them on a local replica to test integration functionality without worrying about paying cycles or using production environments. 
+
+To use `dfx deps`, there are two roles to the workflow. A service provider can configure a canister to be 'pullable', meaning it can be pulled by others using `dfx deps`, and a service consumer can pull a canister from the mainnet if that canister has been configured to be 'pullable'. 
+
+A separate blog post has been published on this subcommand and workflow that goes into much deeper detail. You can check out that blog post [here](https://internetcomputer.org/blog/features/dfx-deps), and the corresponding developer documentation for it [here](https://internetcomputer.org/docs/current/developer-docs/setup/pulling-canister-dependencies). 
+
+## New sample code: QR code generator 
+
+Thanks to Ulan Degenbaev from the Runtime team, a new Rust example has been added to the `DFINITY/examples` repository. This example demonstrates how dapps on the IC can perform long-running computation tasks, such as image processing, in a single message execution. This functionality is possible to Deterministic Time Slicing (DTS), which is a unique feature on the IC that divides long computational tasks into smaller slices that are then executed across multiple blocks. Using this new feature, developers can write long-running computational code as they normally would, and don't need to perform any special tasks to take advantage of the DTS benefits. 
+
+This new sample code demonstrates the DTS functionality using a QR code generation application. A live version of this sample can be found [here](https://khpe2-4qaaa-aaaao-a2fnq-cai.icp0.io/) for you to try out.
+
+If you want to play with the sample locally, you can find the code in our examples repo [here](https://github.com/dfinity/examples/tree/master/rust/qrcode).
+
+### How the QR code generator works
+
+In this sample, the initial dapp code has been generated by dfx's standard template with the `dfx new` command. 
+
+The frontend canister contains an HTML webpage that includes a form for users to enter text fields to configure the QR code. Then, a 'Generate!' button uses a JavaScript handler to initiate a call to the backend canister, which automatically generates a JavaScript object from the Candid interface. The JavaScript object uses async functions for each of the backend canister's endpoints. There are two backend endpoints: one for updates and one for queries. This is intentionally done for educational purposes. The JavaScript button uses async functions to make the call from the frontend to the backend. 
+
+This sample is written in Rust and utilizes the `image` and `qrcode-generator` crates. There is some minor image processing that happens as well, in order to add the Internet Computer logo and color scheme to the final generated QR code image result. 
+
+## `dfx deploy --playground`
+
+For our last topic today, we're going to briefly introduce a new upcoming feature: `dfx deploy --playground`!
+
+`dfx deploy --playground` is an upcoming feature that will soon be available in dfx. With this new `--playground` flag, canisters can be immediately deployed to the Motoko playground. When this flag is used, the canisters in the dfx project will be deployed to the IC mainnet and a canister URL will be returned to the developer. This deployment method allows devs to quickly deploy canisters to the mainnet without having to first setup a cycles wallet or acquire cycles. This allows for developers to quickly get started using dfx to help aid in the developer onboarding process. 
+
+It is important to note that canisters deployed with the `--playground` flag will be subject to the same restrictions as other canisters deployed to the Motoko playground. These restrictions are:
+
+- Cycle transfer instructions are silently ignored by the system.
+- Canisters can use at most 1GB of stable memory.
+- Canisters can call the management canister to manage itself without being the controller.
+- Deployed canisters expire after 20 minutes.
+
+This feature is upcoming and will be elaborated on further in a future blog post with additional documentation. Be sure to stay tuned for that update! 
+
+That's it for this week! Be sure to tune back in next week for our weekly update, plus another installment of our team spotlight series!
+
+-DFINITY
+
+-->

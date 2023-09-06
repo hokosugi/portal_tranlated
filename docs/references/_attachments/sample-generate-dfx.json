@@ -1,0 +1,24 @@
+{
+  "canisters": {
+    "hello_world": {
+      "main": "src/hello_world/main.mo",
+      "type": "motoko",
+      "declarations": {
+        "output": "src/declarations/",
+        "bindings": [
+          "js",
+          "ts",
+          "did",
+          "mo"
+        ],
+        "env_override": "xxxxx"
+      }
+    }
+  },
+  "defaults": {
+    "build": {
+      "packtool": ""
+    }
+  },
+  "version": 1
+}

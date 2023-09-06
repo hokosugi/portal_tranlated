@@ -1,0 +1,484 @@
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+@use "sass:meta";
+
+@import "~katex/dist/katex.min.css";
+@import "fonts.css";
+
+/* You can override the default Infima variables here. */
+:root {
+  font-family: "CircularXX", sans-serif;
+  --ifm-font-family-base: "CircularXX", sans-serif;
+  --ifm-color-primary: #3b00b9;
+  --ifm-color-primary-dark: #3500a7;
+  --ifm-color-primary-darker: #32009d;
+  --ifm-color-primary-darkest: #290082;
+  --ifm-color-primary-light: #4100cb;
+  --ifm-color-primary-lighter: #4400d5;
+  --ifm-color-primary-lightest: #4d00f1;
+  --ifm-background-color: #f1eef5;
+  --ifm-navbar-height: 110px;
+  --ifm-navbar-x-padding: Max(calc((100vw - 1320px) / 2), 50px);
+  --ifm-navbar-background-color: rgb(241, 238, 245);
+  --ifm-navbar-shadow: 0px 2px 4px rgba(0, 0, 0, 0);
+  --ifm-navbar-search-input-color: rgba(24, 24, 24, 0.6);
+  --ifm-navbar-search-input-background-color: #f8f3f1;
+  --ifm-navbar-search-input-placeholder-color: rgba(24, 24, 24, 0.6);
+  --ifm-navbar-search-input-icon: url('data:image/svg+xml;utf8,<svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16px" height="16px"><path d="M11.7668 11.0239L14.6221 13.8786L13.6788 14.8219L10.8241 11.9666C9.76196 12.818 8.4408 13.2812 7.07947 13.2792C3.76747 13.2792 1.07947 10.5912 1.07947 7.27924C1.07947 3.96724 3.76747 1.27924 7.07947 1.27924C10.3915 1.27924 13.0795 3.96724 13.0795 7.27924C13.0814 8.64057 12.6183 9.96173 11.7668 11.0239ZM10.4295 10.5292C11.2755 9.65916 11.748 8.49286 11.7461 7.27924C11.7461 4.70057 9.65747 2.61257 7.07947 2.61257C4.5008 2.61257 2.4128 4.70057 2.4128 7.27924C2.4128 9.85723 4.5008 11.9459 7.07947 11.9459C8.29309 11.9478 9.45939 11.4753 10.3295 10.6292L10.4295 10.5292Z" fill="currentColor" stroke="currentColor" stroke-width="0.5"/></svg>');
+  --ifm-footer-background-color: #3b00b9;
+  --ifm-transition-custom-speed: 300ms;
+  --ifm-transition-custom-curve: cubic-bezier(0, 0, 0.19, 1);
+  --ic0-color: #3b00b9;
+  scroll-behavior: smooth;
+
+  --ifm-navbar-link-hover-color: #da3979;
+  --ifm-navbar-link-active-color: #da3979;
+
+  --ifm-menu-color: #181818;
+
+  --ic0-nav-border: 1px solid white;
+  --ic0-article-background: linear-gradient(180deg, #f5f5f5 0%, #f2eff6 100%);
+}
+
+@import "./animate.scss";
+@import "./blog.scss";
+@import "./code.scss";
+@import "./navbar.scss";
+@import "./scrollbar.scss";
+@import "./sidebar.scss";
+@import "./subnav.scss";
+@import "./map.scss";
+
+// specifically target the dev docs namespace;
+// we don't want to apply these styles to the marketing pages
+html.docs-doc-page,
+html.plugin-blog {
+  --ifm-navbar-padding-horizontal: 24px;
+  --ifm-navbar-y-padding: 0;
+  --ifm-navbar-height: 88px;
+  --ifm-subnav-height: 54px;
+  --ifm-color-primary: #791e94;
+  --ifm-navbar-link-hover-color: #791e94;
+  --ifm-navbar-x-padding: 50px;
+
+  @media (max-width: 996px) {
+    --ifm-navbar-x-padding: var(--ifm-navbar-padding-horizontal);
+  }
+
+  // sets the filter color (e.g. for pseudo elements) to --ifm-color-primary (#791E94) on hover
+  // NOTE: if `--ifm-color-primary` changes, the filter value should be recomputed
+  // the following can be used to create a filter for a target hex color: https://codepen.io/sosuke/pen/Pjoqqp
+  // also see https://stackoverflow.com/questions/42966641/how-to-transform-black-into-any-given-color-using-only-css-filters/43960991#43960991
+  --ifm-color-primary-filter: brightness(0) saturate(100%) invert(15%)
+    sepia(45%) saturate(5162%) hue-rotate(277deg) brightness(98%) contrast(95%);
+
+  .navbar {
+    padding: var(--ifm-navbar-y-padding) var(--ifm-navbar-x-padding);
+
+    --ifm-color-primary: #3b00b9;
+
+    // color the dropdown caret on hover
+    .navbar__item:hover {
+      &.dropdown {
+        .navbar__link {
+          &:after {
+            filter: var(--ifm-color-primary-filter);
+          }
+        }
+      }
+    }
+  }
+}
+
+html.plugin-blog {
+  .container {
+    max-width: unset;
+  }
+}
+
+html.docs-doc-page:not(.docs-doc-id-home) {
+  --ifm-toc-border-color: transparent;
+  --ifm-toc-padding-horizontal: 0;
+
+  // style the article body
+  main[class*="docMainContainer_"] {
+    background: var(--ic0-article-background);
+
+    a {
+      font-weight: 500;
+    }
+
+    .container {
+      padding: 0 !important;
+    }
+
+    // ensure the docs content fills up the available width on mobile
+    @media (max-width: 996px) {
+      .container {
+        max-width: unset;
+      }
+    }
+
+    .row {
+      margin: 0;
+    }
+
+    div[class*="docItemContainer_"] {
+      padding: 40px 20px;
+
+      // mobile/tablet Table of Contents dropdown
+      div[class*="tocCollapsible_"] {
+        background: var(--ifm-menu-color-background-hover);
+        margin-bottom: 60px;
+
+        button[class*="tocCollapsibleButton_"] {
+          padding: 0.8rem;
+          font-weight: 500;
+          text-transform: capitalize;
+        }
+      }
+    }
+
+    @media (min-width: 577px) {
+      div[class*="docItemContainer_"] {
+        // padding around article content
+        padding: 60px 40px;
+      }
+    }
+
+    @media (min-width: 996px) {
+      div[class*="docItemContainer_"],
+      div.blog-post-content-layout {
+        // padding around article content
+        padding: 40px 100px;
+      }
+    }
+
+    div[class*="tableOfContents"] {
+      top: calc(var(--ifm-navbar-height) + var(--ifm-subnav-height) + 40px);
+      max-height: calc(100vh - (var(--ifm-navbar-height) + 7rem));
+      padding-right: 40px;
+
+      .table-of-contents {
+        padding-top: 0;
+      }
+
+      &:before {
+        // TODO: can this string be localized?
+        content: "On this page";
+        font-weight: 500;
+        text-transform: uppercase;
+      }
+    }
+  }
+}
+
+/* For readability concerns, you should choose a lighter palette in dark mode. */
+[data-theme="dark"] {
+  @include meta.load-css("highlight.js/styles/github-dark");
+  --ifm-color-primary: #e11f7a;
+  --ifm-color-primary-dark: #cb1b6e;
+  --ifm-color-primary-darker: #c01a68;
+  --ifm-color-primary-darkest: #9e1555;
+  --ifm-color-primary-light: #e43687;
+  --ifm-color-primary-lighter: #e6418e;
+  --ifm-color-primary-lightest: #ea65a4;
+  --ifm-navbar-background-color: #242526;
+}
+
+div[class^="announcementBarContent"] {
+  background: linear-gradient(
+    90.1deg,
+    #fbb03b 1.35%,
+    #f57c2d 15.43%,
+    #f15a24 26.38%,
+    #ed1e79 45.16%,
+    #be217d 54.55%,
+    #5c2684 76.97%,
+    #29abe2 99.92%
+  );
+  color: white;
+  font-weight: bold;
+}
+
+.markdown-youtube-thumbnail {
+  position: relative;
+  display: block;
+}
+
+.markdown-youtube-thumbnail img {
+  object-fit: cover;
+  object-position: center;
+  aspect-ratio: 16 / 9;
+}
+
+.markdown-youtube-thumbnail:after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background-image: url(/img/youtube-play-button.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.gradient-text {
+  background-image: linear-gradient(108.55deg, #3b00b9 0%, #18d0b5 149.76%);
+}
+
+.panel-gradient {
+  background: linear-gradient(
+    105.94deg,
+    rgba(255, 255, 255, 0.24) 0%,
+    rgba(255, 255, 255, 0) 38.54%,
+    rgba(255, 255, 255, 0.136216) 100%
+  );
+}
+
+.hero-stat-red {
+  background: linear-gradient(
+    141.63deg,
+    #ffffff 19.8%,
+    rgba(236, 0, 140, 0.5) 112.99%
+  );
+}
+
+.hero-stat-blue {
+  background: linear-gradient(
+    141.63deg,
+    #ffffff 19.8%,
+    rgba(59, 0, 185, 0.5) 112.99%
+  );
+}
+
+.hero-stat-green {
+  background: linear-gradient(
+    141.63deg,
+    #ffffff 19.8%,
+    rgba(24, 208, 181, 0.5) 112.99%
+  );
+}
+
+.component-fade-in {
+  animation: fade-in 500ms ease-out backwards;
+}
+
+@keyframes nft-marquee-left {
+  from {
+    transform: translateX(-25%);
+  }
+  to {
+    transform: translateX(-75%);
+  }
+}
+
+@keyframes nft-marquee-right {
+  from {
+    transform: translateX(-75%);
+  }
+  to {
+    transform: translateX(-25%);
+  }
+}
+
+.nft-marquee-left {
+  animation: nft-marquee-left 50s linear infinite;
+}
+
+.nft-marquee-right {
+  animation: nft-marquee-right 50s linear infinite;
+}
+
+@keyframes ethdenver-astronaut {
+  from {
+    transform: translate(-40px, 100px);
+  }
+  to {
+    transform: translate(0px, 0px);
+  }
+}
+
+.ethdenver-astronaut {
+  animation: ethdenver-astronaut 3s cubic-bezier(0, 0.51, 0.37, 0.94) forwards;
+}
+
+@keyframes badge-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.badge-spin {
+  animation: badge-spin 10s linear infinite;
+}
+
+@keyframes search-loading {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.search-loading {
+  animation: search-loading 10s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+.navbar__link--divider {
+  display: none;
+}
+
+.menu__list .menu__list-item .dropdown__link--with-icon img {
+  display: none;
+}
+
+.navbar__link--dummy {
+  display: none;
+}
+
+// mobile top level sidebar
+.navbar-sidebar__item > :not(.theme-doc-sidebar-menu).menu__list {
+  .navbar__link--divider {
+    display: block;
+    margin: 0;
+    padding: 12px 8px 4px;
+    text-transform: uppercase;
+    font-size: 11px;
+    line-height: 20px;
+    font-weight: bold;
+    color: rgba(59, 0, 185, 0.3);
+  }
+
+  .menu__list-item {
+    a {
+      border-radius: 0;
+      font-size: 18px;
+      padding: 0 8px;
+      line-height: 52px;
+    }
+  }
+
+  > .menu__list-item {
+    margin-bottom: 14px;
+    padding: 0 0 14px;
+    border-bottom: 1px solid #18181814;
+
+    a:hover {
+      background-color: transparent;
+    }
+  }
+
+  .menu__list {
+    padding: 0;
+    .menu__list-item {
+      margin: 0;
+      a {
+        color: var(--ifm-color-primary);
+        padding: 0 8px;
+        line-height: 52px;
+      }
+      a:hover,
+      a.menu__link--active {
+        background: #f1eef5;
+      }
+    }
+
+    .menu__list {
+      .menu__list-item {
+        padding-bottom: 0;
+        border-bottom: none;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 996px) {
+  .navbar__link--dummy {
+    display: block;
+    line-height: 46px;
+  }
+
+  .dropdown--right .dropdown__menu {
+    left: 50%;
+    right: inherit;
+    padding: 0 0;
+    width: max-content;
+    --ifm-dropdown-link-color: var(--ifm-color-primary);
+    --ifm-dropdown-hover-background-color: rgba(59, 0, 185, 0.1);
+  }
+
+  .dropdown__menu .dropdown__link {
+    padding: 12px 24px;
+    border-radius: 0;
+    margin: 0;
+    min-width: max-content;
+    font-size: 16px;
+    line-height: 22px;
+  }
+
+  .dropdown__menu .dropdown__link--with-icon {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  .dropdown__menu li:first-child {
+    padding-top: 12px;
+  }
+  .dropdown__menu li:last-child {
+    padding-bottom: 12px;
+  }
+
+  .navbar__link.dropdown--custom + .dropdown__menu {
+    display: grid;
+  }
+
+  .navbar__link.dropdown--custom.dropdown--columns-2 + .dropdown__menu {
+    grid-template-columns: minmax(240px, 1fr) minmax(min-content, 1fr);
+    li:nth-child(odd) {
+      border-right: 1px solid rgba(59, 0, 185, 0.1);
+    }
+  }
+
+  .navbar__link--divider {
+    display: block;
+    margin: 0;
+    padding: 12px 24px 4px;
+    text-transform: uppercase;
+    font-size: 11px;
+    line-height: 20px;
+    font-weight: bold;
+    color: rgba(59, 0, 185, 0.3);
+  }
+}
+
+.hero-eth-tx-gauge {
+  transform-origin: calc(50vw - 14px) 4px;
+}
+
+@media (min-width: 996px) {
+  .hero-eth-tx-gauge {
+    transform-origin: 196px 16px;
+    // top: -4px;
+  }
+}
+
+//custom styling for tables on SNS docs
+.light-orange-text {
+  background-color: #fbb03b;
+}
+
+.light-green-text {
+  background-color: #b8eda8;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

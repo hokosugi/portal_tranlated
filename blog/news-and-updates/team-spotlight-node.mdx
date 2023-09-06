@@ -1,0 +1,219 @@
+---
+
+title: Team spotlight - Node 
+description: For this edition, we interviewed the Node team to learn more about the core technology of the Internet Computer. 
+tags: [Team spotlight]
+image: /img/blog/dev-update-blog-node.jpg
+---
+![Node Team spotlight](../../static/img/blog/dev-update-blog-node.jpg)
+
+皆さん、こんにちは！今回もチーム・スポットライトをお届けします。今回は、Internet Computer のコア・テクノロジーについて詳しく知るために、ノード・チームにインタビューしました。ノード・チームは、Internet Computer の非常に重要な構成要素です。なぜなら、彼らはICの基盤であるノードを担当しているからです。私たちと同じように、皆さんももっと知りたいと願っていることでしょう！
+
+**まずは、いつものように自己紹介から始めましょう。ノード・チームのミッションは何ですか？**
+
+*私たちの使命は、Internet Computer protocol 、世界中の分散したプライベート・インフラ上で実行できるようにすることです。Internet Computer ネットワークを構成する数百のノードのハードウェア規格を定義します。分散型オンボーディングプロセスで使用されるソフトウェアの構築と保守を行い、世界中のノードプロバイダがNNS DAO経由で承認を得た後にノードをオンボーディングできるようにします。ノードマシン上で実行される多くのICサービスのためのソフトウェア実行環境を構築し、維持します。オンボーディングからセルフアップグレード、セキュリティに至るまで、ノードのライフサイクルcycle を監督しています。*
+
+**ノード・チームは膨大な責任を負っているように聞こえますが、基本的にICの基盤です。ノードチームの構成を教えてください。**
+
+*チームは4人のエンジニア、2人の研究者、1人のエンジニアリング・マネージャーで構成されており、アメリカ、カナダ、スイス、ドイツにまたがっています！*
+
+**IC-OSとは何ですか？**
+
+*IC-OSは、IC内のすべてのオペレーティング・システムの総称です：*
+
+- *SetupOS（別名IC-OSインストーラ）は、（HostOSとGuestOSをインストールすることで）新しいレプリカノードをデプロイします。*
+
+- *レプリカノードマシンのベアメタル上で動作するHostOS。HostOS は仮想マシン内で GuestOS を実行します。*
+
+- *仮想マシン内で動作する GuestOS。レプリカはGuestOS内で実行されます。*
+
+- *Boundary-GuestOS、Boundary-Api-GuestOSを含むBoundaryOS。*
+
+*読者は、私たちのオペレーティングシステムが存在するICリポジトリのIC-OSフォルダを表示する必要があります： https://github.com/dfinity/ic/tree/master/ic-os*
+
+*ここに、レプリカ・ノード上で実行されるすべてのサービスのハイレベルな概要があります：*
+
+![Node diagram](../../static/img/blog/node-diagram.png)
+
+** DFINITY 内にはノード・チームとバウンダリー・ノード・チームがあります。ノードチームとバウンダリノードチームの違いは何ですか？**
+
+*ノードチームはレプリカOS（SetupOS、HostOS、GuestOS）を管理します。これらのOSはレプリカノード上で動作します。バウンダリノードチームはバウンダリOS（Boundary-GuestOS、Boundary-Api-GuestOS）を管理します。これらのOSはバウンダリ・ノード上で動作します。*
+
+**ノード・プロバイダーはICの非常に重要なコンポーネントです。ノード・チームはどのようにノード・プロバイダをサポートしているのですか？**
+
+*ノードチームはオンボーディングプロセス（IC-OSのインストール）の間、ノードプロバイダをサポートします。しかし、私たちのチームの優先事項の一つは、ノードチームとDFINITY がオンボーディングプロセスに必要ないように、ノードプロバイダのオンボーディングプロセスをできるだけシンプルで分散化することです。*
+
+**このように多くの責任を負い、チームとして重要な取り組みであるため、チームが直面する課題がいくつかあると想像できます。チームがこれまでに直面した最大の課題は何だと思いますか？**
+
+*通常の仕事量をこなしながら、私たちの支援を必要とする何十もの新機能に対応し続けることです。やるべきことは常にあります！*
+
+**IC-OSソフトウェアへの一貫したアップグレードと変更に伴い、ノードチームはノードのライフcycle にどのように貢献していますか？**
+
+*GuestOSとHostOSはどちらもセルフアップグレードです。各OSはパッシブパーティションセットに書き込み、そのパッシブパーティションセットに再起動するメカニズムを持っており、それによって自分自身をアップグレードします（そしてパッシブパーティションセットをアクティブパーティションセットにします）。「レプリカのアップグレード」は、レプリカだけでなく、（レプリカを含む）GuestOSとGuestOSバイナリ全体がアップグレードされるため、実際にはGuestOSのアップグレードです。*
+
+*発売以来、100以上の GuestOS アップグレードを完了し、まもなく初の HostOS アップグレードをリリースする予定です。*
+
+*アップグレード手順の詳細については、こちらを参照してください: https://github.com/dfinity/ic/blob/master/ic-os/docs/Upgrades.adoc*
+
+**ノードチームはノードのハードウェアとやり取りしたり、決定を下したりしますか？**
+
+*はい、ノードチームはノードマシンのハードウェア仕様の定義と検証を担当します。ハードウェアを検証する際、ノードチームには3つの主な基準があります：*
+
+*1.性能。ノードマシンは、IC上で実行される高性能アプリケーションをサポートするのに十分な速度でなければなりません。*
+
+*2.ストレージ。ノードマシンは、低コストのストレージを提供するのに十分なサイズである必要があります。*
+
+*3.SEV-SNP。最新のハードウェア世代（gen2ハードウェア）では、最新のAMD CPUのいずれかを介したSEV-SNPサポートが必要です。ハードウェア仕様の詳細については、https://wiki.internetcomputer.org/wiki/Node\_Provider\_Machine\_Hardware\_Guide をご覧ください。*
+
+**ノードプロバイダのフィードバックから直接得られた改善点はありますか？**
+
+*もちろんです。Nodeチームは、ノードプロバイダからオンボーディング手続きに関するフィードバックを常に受けており、このフィードバックを元にプロセスやドキュメントを改善しています。全てのノードプロバイダはノードプロバイダマトリックスチャンネルに参加し、フィードバックや提案をDFINITY やコミュニティと共有することをお勧めします: https://wiki.internetcomputer.org/wiki/Node\_Provider\_Matrix\_channel*
+
+**ノードプロバイダが頻繁に有意義なフィードバックを提供してくれると聞いて、とても嬉しく思っています。**
+
+**話は変わりますが、Nodeチームが現在取り組んでいる、あるいは注力している主なプロジェクトは何でしょうか？**
+
+*SEV-SNPで保護されたレプリカ・ノードです。*
+
+**SEV-SNPで保護されたレプリカノードを完成させるために必要な主なコンポーネントは何ですか？**
+
+*SEV-SNPは、新しいAMDプロセッサに組み込まれたハードウェアベースのセキュリティ機能です。SEV-SNPで保護された仮想マシンを利用可能にするには、大量の新しいソフトウェア・インフラストラクチャを設計して実装する必要があります。*
+
+**SEV-SNPレプリカノードのメリットは何ですか？**
+
+*SEV-SNPで保護されたレプリカ・ノードでは、NNSに祝福されたGuestOSイメージのみが実行されるようにし、改ざん防止のハードウェア・ベースのセキュリティ機能でメモリを暗号化することで、IC全体のセキュリティ・レベルが大幅に向上します。*
+
+**非常にやりがいのあるプロジェクトのようですね！開発者やユーザはいつ完成を期待できますか？**
+
+*SEV-SNP対応レプリカノードは、2024年初頭までにロールアウトされる予定です。*
+
+**ノードの最新アップデートはどこで入手できますか？(フォーラム、Discord など）。**
+
+*アップデートは開発者フォーラムに投稿されます！*
+
+**チームが最も誇りに思っているIC-OSの機能や側面は何ですか？**
+
+*ICの歴史の中で100回以上のアップグレードの中で、一度もICが停止したことがありません。*
+
+**これは間違いなく誇れることです！ノード・チームの効率性と信頼性を如実に示しています。**
+
+\*\*最後に、DFINITY の他の開発チームと比較して、ノードチームの特徴は何ですか？ \*\*
+
+* canister スマートコントラクト、Internet Computer protocol とその実行環境、ネットワーキング・インフラ、そしてノード・マシンそのものです！*
+
+![IC Stack](../../static/img/blog/ic-stack.png)
+
+DFINITY Nodeチームの皆さん、本日はありがとうございました！このインタビューを読んでくださった皆さんが、私たちと同じように楽しんでくださったことを願っています！
+
+次回まで！
+
+\-DFINITY
+
+<!---
+
+
+![Node Team spotlight](../../static/img/blog/dev-update-blog-node.jpg)
+
+Hello everyone! It's time for another issue of team spotlight. For this edition, we interviewed the Node team to learn more about the core technology of the Internet Computer. The node team is an extremely vital component of the Internet Computer, since they are responsible for the very foundation of the IC: nodes. I hope you're as excited as we are to learn more! 
+
+**To kick things off, let's start with our usual introduction. What is the mission of the Node team?**
+
+*Our mission is to enable the Internet Computer protocol to run on distributed, private infrastructure, all over the world. We define the hardware standards for the hundreds of nodes that make up the Internet Computer network. We build and maintain the software used in the decentralized onboarding process, enabling node providers from all over the world to onboard nodes after gaining approval via the NNS DAO. We build and maintain the software running environment for the many IC services that run on node machines. We oversee the node lifecycle, from onboarding to self-upgrading to security.*
+
+**It sounds like the Node team has an enormous amount of responsibilities, essentially being the foundation of the IC. What is the composition of the Node team?**
+
+*The team consists of 4 engineers, 2 researchers, and 1 engineering manager, spread across the United States, Canada, Switzerland and Germany!*
+
+**Could you give us a brief overview of what the IC-OS is?**
+
+*IC-OS is an umbrella term for all [of] the operating systems within the IC, including:*
+
+- *SetupOS (AKA the IC-OS installer), which deploys a new replica node (by installing HostOS and GuestOS).*
+
+- *HostOS, which runs on the bare metal of a replica node machine. HostOS runs GuestOS in a virtual machine.*
+
+- *GuestOS, which runs inside a virtual machine. The replica is executed within the GuestOS.*
+
+- *BoundaryOSes, which includes Boundary-GuestOS, Boundary-Api-GuestOS.*
+
+*Readers should view the IC-OS folder in the IC repo where our operating systems reside: https://github.com/dfinity/ic/tree/master/ic-os*
+
+*Here is a high-level overview of all the services running on a replica node:*
+
+![Node diagram](../../static/img/blog/node-diagram.png)
+
+**Within DFINITY, there is the Node team, and there is a Boundary Node team. How does the Node team differ from the Boundary Node team?**
+
+*The node team maintains the replicaOSes (SetupOS, HostOS, GuestOS). These OSes run on replica nodes. The Boundary Node team maintains the BoundaryOSes (Boundary-GuestOS, Boundary-Api-GuestOS). These OSes run on boundary nodes.*
+
+**Node providers are an extremely important component of the IC. How does the Node team support Node Providers?**
+
+*The node team supports Node Providers during the onboarding procedure (the IC-OS installation), but one of our team priorities is to make the Node Provider onboarding procedure as simple and decentralized as possible so that the Node Team and DFINITY are not a necessary part of the onboarding process.*
+
+**With so many responsibilities, and such an important team initiative, I can imagine that there are several challenges that the team faces. What would you say is the biggest challenge the team has faced so far?**
+
+*Keeping up with dozens of new features that require our assistance while managing our normal workload. There’s always more work to be done!*
+
+**With consistent upgrades and changes to the IC-OS software, how does the Node team contribute to the lifecycle of nodes?**
+
+*GuestOS and HostOS are both self-upgrading. Each OS has a mechanism to write to a passive partition set and reboot into its passive partition set, thereby upgrading itself (and making the passive partition set its active partition set). “Replica upgrades” are really GuestOS upgrades, as not only the replica is upgraded, but also the entire GuestOS and GuestOS binaries (including the replica).*
+
+*Since launch, we have completed over 100 GuestOS upgrades, and we are planning to release our first ever HostOS upgrade very soon.*
+
+*To learn more about the upgrade procedure, see here: https://github.com/dfinity/ic/blob/master/ic-os/docs/Upgrades.adoc*
+
+**Does the Node team interact with or make decisions regarding node hardware?**
+
+*Yes, the Node Team is responsible for defining and validating the node machine hardware specifications. When validating hardware, the node team has three main criteria:*
+
+*1. Performance. Node machines must be fast enough to support the high-performance apps that run on the IC.*
+
+*2. Storage. Node machines must be sufficiently large enough to provide low-cost storage.*
+
+*3. SEV-SNP. The latest hardware generation (gen2 hardware) requires SEV-SNP support via one of the latest AMD CPUs. To learn about the full hardware specs, see: https://wiki.internetcomputer.org/wiki/Node_Provider_Machine_Hardware_Guide*
+
+**Have there been any improvements made as a direct result of node provider feedback?**
+
+*Absolutely. The Node team is constantly receiving feedback from Node Providers about the onboarding procedure, and we use this feedback to improve our processes and documentation. All Node Providers are encouraged to join the Node Provider matrix channel to share any feedback or suggestions with DFINITY and the community: https://wiki.internetcomputer.org/wiki/Node_Provider_Matrix_channel*
+
+**That's incredible to hear that Node Providers frequently help provide meaningful feedback.**
+
+**Switching focus, what is the primary project that the Node team is working on or focused on currently?**
+
+*SEV-SNP protected replica nodes.*
+
+**What are the primary components required for completion of SEV-SNP protected replica nodes?**
+
+*SEV-SNP is a hardware-based security feature built into new AMD processors. Enabling SEV-SNP protected virtual machines requires designing and implementing a great deal of new software infrastructure.*
+
+**What are the benefits of SEV-SNP replica nodes?**
+
+*SEV-SNP protected replica nodes will provide a much greater level of security for the entire IC by making sure that only NNS-blessed GuestOS images are running and encrypting the memory with a tamper-proof hardware-based security feature.*
+
+**It sounds like an extremely rewarding project! When can developers and users expect it to be completed?**
+
+*SEV-SNP enabled replica nodes are planned to be rolled out by early 2024.*
+
+**Where should developers look for the latest Node updates? (Forum, Discord, etc).**
+ 
+*Updates will be posted to the developer forum!*
+
+**What is one feature or aspect of IC-OS that the team is the most proud of?**
+
+*In the 100+ upgrades in the history of the IC, not a single one has caused an IC outage.*
+
+**That is definitely something to be proud of! That really showcases the efficiency and reliability of the node team.**
+
+**To wrap things up, what makes the Node team unique compared to some of the other dev teams at DFINITY? **
+
+*We have to concern ourselves with the entire IC stack: the canister smart contracts, the Internet Computer protocol and its running environment, the networking infrastructure, and the node machines themselves!*
+
+![IC Stack](../../static/img/blog/ic-stack.png)
+
+Thank you to the DFINITY Node team for sitting down with us today and providing such educational and insightful information! I hope everyone reading has enjoyed this interview as much as we have; it was great to learn so much!
+
+Until next time!
+
+-DFINITY
+
+-->

@@ -1,0 +1,173 @@
+---
+
+title: Developer weekly update June 21, 2023
+description: This week, we’re going to talk about some new important pieces of documentation, a new Quill release, and an awesome new example project developed by Luc Bläser from the DFINITY languages team for the Motoko workshop at KTH summer school.
+tags: [Devs]
+image: /img/blog/dev-update-blog-jun-2-2.jpeg
+---
+# 開発者ウィークリー・アップデート：2023年6月21日
+
+![June 21, 2023](/img/blog/dev-update-blog-jun-2-2.jpeg)
+
+開発者のみなさん、こんにちは！
+
+今週はDFINITY 言語チームの Luc Bläser が KTH サマースクールMotoko ワークショップのために開発した新しいサンプルプロジェクトについてお話します。
+
+それでは始めましょう！
+
+## 重要な新しいドキュメントページ
+
+### HTTP outcalls チュートリアル
+
+今週、開発者向けドキュメントに HTTP outcalls の使用に関する新しい包括的なチュートリアルが追加されました。これらのチュートリアルには以下が含まれます：
+
+- [HTTPS outcalls: 技術概要](https://internetcomputer.org/docs/current/developer-docs/integrations/https-outcalls/https-outcalls-how-it-works): このページでは、HTTP outcalls の背後にある技術がどのように動作するかの概要について説明します。要約すると、canister が管理canister API を使用して HTTP リクエストを発信すると、リクエストはサブネットのレプリケートされたステートに一時的に保存されます。その後、各レプリカは外部のウェブサーバーから受け取ったHTTPレスポンスのインスタンスをICのコンセンサスレイヤーを通してプッシュします。これにより、サブネット上の各レプリカは、canister から提供されたHTTPレスポンスに合意することができます。
+- [HTTPアウトコールの使い方イントロダクション](https://internetcomputer.org/docs/current/developer-docs/integrations/https-outcalls/https-outcalls-how-to-use)：このページでは、HTTPアウトコールの送信に使用されるAPIのハイレベルな概要を説明します。
+- [HTTP outcalls の使用方法：GET](https://internetcomputer.org/docs/current/developer-docs/integrations/https-outcalls/https-outcalls-get): このページには、Coinbase API にリクエストを行うサンプルcanister を使用して`GET` HTTP リクエストを行う方法を紹介する、Diego Prats による全く新しいチュートリアルが含まれています。このチュートリアルでは、Motoko と Rust の両方の開発ワークフローについて説明しています。
+- [HTTP アウトコールの使い方リクエストの](https://internetcomputer.org/docs/current/developer-docs/integrations/https-outcalls/https-outcalls-post)ヘッダーとボディが正しく送信されたかどうかを検証するために使用される無料の API に JSON 情報を含むリクエストを送信するサンプルcanister を使用して、`POST` HTTP リクエストを作成する方法を説明します。
+
+### リソース制限と制約のドキュメント
+
+今週追加されたドキュメントのもう1つの新しいページでは、canister キュー制限、命令制限クエリーコール、Wasm 安定メモリー、サブネット容量など、IC の[リソース制約と制限について](https://internetcomputer.org/docs/current/developer-docs/backend/resource-limits)詳しく説明しています。以下の表をご覧ください：
+
+| リソース | 制約 |
+| --- | --- |
+| Canister キュー制限 | 500メッセージ |
+| 最大イングレスおよびクロスネット間canister 通話ペイロード | 2MB |
+| 最大同一サブネット間canister コール・ペイロード（いずれ廃止される可能性あり） | 10MB |
+| 最大応答サイズ | 2MB |
+| アップデートコール/ハートビート/タイマーごとの命令数制限 | 1メソッド呼び出しあたり20B |
+| クエリーコールあたりの命令数制限 | 5B |
+| canister 、インストールとアップグレードの命令数制限 | 200B |
+| サブネット容量 | 450GB |
+| ワズムヒープサイズ | 4GB |
+| Wasm安定メモリ | 64GB |
+| Wasmカスタムセクション | サブネットあたり2GB;canister あたり1MB; 最大16セクション (canister あたり) |
+| Wasmコードセクション | 10MB |
+| クエリーコール実行スレッド | レプリカノードあたり2 |
+| アップデートコール実行スレッド | サブネットあたり4 |
+
+全リストは[こちらを](https://internetcomputer.org/docs/current/developer-docs/backend/resource-limits)ご覧ください。
+
+## 新しいQuillリリース - 0.4.2
+
+今週、Quillバージョン0.4.2がリリースされました！新しいLedgerサポート機能では、NNS UIとQuillの間で同じキーを共有することができます。この新機能を使用するには、`--ledger` フラグを使用します。
+
+Ledgerサポートに加え、このリリースには以下の新機能が追加されています：
+
+- `quill public-ids` に`--subaccount` を追加しました。
+- `--ledger` による Ledger サポートの追加。
+- `--confirmation-text` を`quill sns pay` に追加。
+- `quill ckbtc update-balance` で匿名プリンシパルを使用できるように修正。
+- `quill sns` に`disburse` 、`disburse-maturity` 、`split-neuron` 、`follow-neuron` を追加。
+- ジェネシスの投資家向けにDFNアドレスを印刷するオプションを追加。
+- 新しいICRC-1アカウントIDフォーマットに更新しました。
+
+Quillの新しいリリースは[こちらから](https://github.com/dfinity/quill/releases)入手できます。
+
+## Motoko KTHサマースクールでのワークショップ
+
+先週、DFINITYのLuc Bläserが[KTH](https://cysep.conf.kth.se/)サマースクールプログラムの一環としてプレゼンテーションとワークショップを行いました。ワークショップでは、Motoko canister を使って分散型オークションを作成する方法を学生に説明する、全く新しいMotoko サンプルdapp を紹介しました。オークションプラットフォームは、以下の機能を提供します：
+
+- オークションの開始と閲覧
+- オークション終了前に定義された期限内での入札。
+- インターネット ID を使用した認証。
+
+ワークショップの一環として、この例はその上に構築されることを意図した基礎を提供します。開発者は、次のような機能をdapp に追加することが課題です：
+
+- actor 内のオークションデータの格納と取得（できれば安定変数を使用）。
+- actor のパブリック関数の実装。
+- オークション ID を後で検索できるように関連付けること。
+- オークションの終了に使用できる定期タイマーの実装。
+
+サンプルのレポは[こちらから](https://github.com/luc-blaeser/auction)、ワークショップのスライドは[こちらから](https://github.com/luc-blaeser/auction/blob/main/Motoko_Tutorial.pdf)ご覧いただけます。
+
+それでは、また来週の更新でお会いしましょう！
+
+\-DFINITY
+
+<!---
+
+
+# Developer weekly update: June 21, 2023
+
+![June 21, 2023](/img/blog/dev-update-blog-jun-2-2.jpeg)
+
+Hello devs and welcome to this week’s issue of developer weekly! 
+
+This week, we’re going to talk about some new important pieces of documentation, a new Quill release, and an awesome new example project developed by Luc Bläser from the DFINITY languages team for the Motoko workshop at KTH summer school.
+
+Let’s get started!
+
+## Important new documentation pages
+
+### HTTP outcalls tutorials
+
+This week, the developer documentation received some new, comprehensive tutorials on using HTTP outcalls. These tutorials include:
+
+- [HTTPS outcalls: technology overview](https://internetcomputer.org/docs/current/developer-docs/integrations/https-outcalls/https-outcalls-how-it-works): this page covers the overview of how the technology behind HTTP outcalls operates. In summary, when a canister makes an outgoing HTTP request using the management canister API, the request is temporarily stored in the replicated state of the subnet. Then, each replica pushes an instance of the received HTTP response from the external web server through the IC’s consensus layer. Through this, each replica on a subnet can agree on the HTTP response that’s been provided by the canister. 
+- [How to use HTTP outcalls: Intro](https://internetcomputer.org/docs/current/developer-docs/integrations/https-outcalls/https-outcalls-how-to-use): this page provides a high-level overview of the API used to send HTTP outcalls. 
+- [How to use HTTP outcalls: GET](https://internetcomputer.org/docs/current/developer-docs/integrations/https-outcalls/https-outcalls-get): this page includes a brand new tutorial written by Diego Prats that showcases how to make a `GET` HTTP request using a sample canister that makes a request to the Coinbase API. This tutorial provides instructions for both Motoko and Rust development workflows. 
+- [How to use HTTP outcalls: POST](https://internetcomputer.org/docs/current/developer-docs/integrations/https-outcalls/https-outcalls-post): this page is another brand new tutorial written by Diego Prats that explains how to make a `POST` HTTP request using a sample canister that sends a request with JSON information to a free API that is used to verify that the headers and body of the request were sent properly. 
+
+### Resource limits and constraints documentation
+Another new page of documentation added this week details the IC’s [resource constraints and limits](https://internetcomputer.org/docs/current/developer-docs/backend/resource-limits) for things such as canister queue limit, instruction limit query calls, Wasm stable memory, and subnet capacity. Check out the full chart below:
+
+| Resource          | Constraint            |
+|-------------------|-----------------------|
+| Canister queue limit | 500 messages        |
+| Maximum ingress and cross-net inter-canister call payload | 2MB |
+| Maximum same-subnet inter-canister call payload (may be deprecated at some point)| 10MB |
+| Maximum response size | 2MB |
+| Instruction limit per update call/heartbeat/timer | 20B per method invocation |
+| Instruction limit query calls | 5B |
+| Instruction limit for canister install and upgrade | 200B |
+| Subnet capacity | 450GB |
+| Wasm heap size | 4GB |
+| Wasm stable memory | 64GB |
+| Wasm custom sections| 2GB per subnet; 1MB per canister; 16 sections at most (per canister)|
+| Wasm code section | 10MB |
+| Query calls execution threads | 2 per replica node |
+| Update calls execution threads| 4 per subnet |
+
+You can read the full list [here](https://internetcomputer.org/docs/current/developer-docs/backend/resource-limits).
+
+## New Quill release - 0.4.2
+
+This week, Quill version 0.4.2 was released, adding some great new features such as Ledger support! With the new Ledger support feature, the same key can be shared between the NNS UI and Quill, which previously wasn't possible. To use this new feature, the `--ledger` flag can be used. 
+
+In addition to Ledger support, other new features and additions in this release include:
+
+- Added `--subaccount` to `quill public-ids`.
+- Added Ledger support via `--ledger`. 
+- Added `--confirmation-text` to `quill sns pay`.
+- Fixed `quill ckbtc update-balance` allowing the anonymous principal.
+- Added `disburse`, `disburse-maturity`, `split-neuron`, and `follow-neuron` to `quill sns`.
+- Added option to print DFN address for Genesis investors.
+- Updated to new ICRC-1 account ID format.
+
+You can get the new release of Quill [here](https://github.com/dfinity/quill/releases).
+
+## Motoko workshop at KTH summer school
+
+This past week, DFINITY’s Luc Bläser gave a presentation and workshop as part of the [KTH summer school program](https://cysep.conf.kth.se/). The workshop included a brand new Motoko example dapp that walked students through how to create a decentralized auction using a Motoko canister. The auction platform provides functionality for:
+- Opening and viewing auctions.
+- Bidding within a defined deadline before the auction ends.
+- Authenticating using Internet Identity. 
+
+As part of the workshop, this example provides a foundation that is intended to be built upon. Devs are challenged to add additional functionality to the dapp, such as:
+
+- Storing and retrieving the auction data in the actor, preferably using stable variables.
+- Implementation of public functions for the actor. 
+- Associating the auction’s id for later retrieval. 
+- Implementing a periodic timer that can be used to terminate auctions. 
+
+You can check out the example repo [here](https://github.com/luc-blaeser/auction) and get started workshopping with it yourself, or check out the workshop’s presentation slides [here](https://github.com/luc-blaeser/auction/blob/main/Motoko_Tutorial.pdf).
+
+We'll see everyone back here next week for another update!
+
+-DFINITY
+
+
+
+-->

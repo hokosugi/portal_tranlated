@@ -1,0 +1,143 @@
+---
+
+title: Developer weekly update February 13, 2023
+description: Welcome to this week’s edition of developer weekly, where we give you the lowdown on new tools and features we’re shipping, new use cases for existing features, and other news and content we found interesting over the past week.
+tags: [Devs]
+image: /img/blog/quill.png
+---
+# 開発者ウィークリー・アップデート2023年2月13日
+
+開発者の皆さん、こんにちは！今週のデベロッパーウィークリーへようこそ。
+出荷中の新しいツールや機能、既存機能の新しいユースケース、その他この一週間で気になったニュースやコンテンツをお伝えします。
+
+# Quillに新しい家ができました
+
+![Header image](../_assets/quill.png)
+
+Quillはコールドウォレットのための最小限の台帳とガバナンスツールキットです。Quillを使えば、エアギャップされたデバイスに保存できるセルフカストディキーを使って
+、署名されたメッセージを生成することができます。これらのメッセージはその後、ネットワークにアクセスできるマシン
+に転送することができ、そこでInternet Computer に送信することができます。
+以前は、特定のユースケースに対応する quill のフォークがいくつかありました。私たちは、必要なすべてのコマンド
+に一箇所で簡単にアクセスできるようにしました。sns-quillのようなレポや他の内部フォークもQuillに統合されました。
+quillはリリースページからダウンロードできます。
+
+# 再デプロイcanister
+
+![Header image](../_assets/broken-car.png)
+
+もしあなたのcanister がアップグレード中にトラブったことがあるのなら、それはかなりフラストレーションのたまる経験かもしれません。
+まず最初に試せるのは、canister コードをアンインストールすることです。これでcanister から WASM が削除され、
+は空のステートとなります。注意 - WASM がアンインストールされると、あなたのcanister にはユーザがアクセスできなくなります。
+高い稼働時間が必要な場合は、この方法は最適ではないかもしれません。
+
+    dfx canister uninstall-code [CANISTER NAME or ID]
+
+もちろん、このコマンドを発行するときはcanisterの実際の名前または ID を使用してください。
+
+canister コードがアンインストールされたら、再デプロイを試してください。これで WASM がソースからビルドされ、
+あなたの空のcanister にデプロイされます。
+
+    dfx deploy --upgrade-unchanged [CANISTER NAME or ID]
+
+`--upgrade-unchanged` フラグを使うと、DFX はcanister WASM を強制的にインストールし、新しい
+WASM を古いものと比較するチェックをスキップします。
+
+> canister をアップグレードする場合、`dfx deploy` と`dfx canister install` は、wasm ハッシュが変更されていなければ、.wasm
+> のインストールをスキップします。これにより、たとえば dfx のデプロイごとに、すべての
+> アセットの安定したメモリを往復する必要がなくなります。この引数を渡すことで、dfx は
+> そのハッシュが既にインストールされている wasm と一致しても、代わりにその wasm をインストールします。
+
+このトラブルシューティングがInternet Computer を構築する際に役立つことを願っています！
+
+## 変なChatGPT
+
+![Header image](../_assets/chatgpt.png)
+
+New York Timesの不気味な記事で、コラムニストのKevin Roose氏が、OpenAIのChatGPTを搭載した新しい
+Bing検索エンジンに統合されたチャットボットと会話をしています。
+ご存じない方のために説明すると、ChatGPTはOpenAIによって開発された言語モデルです。基本的には、書籍、記事、ウェブページなどの人間の言語の大規模なデータセットで訓練されたコンピュータプログラム
+。この
+トレーニングを通じて、ChatGPTは人間のような言語を理解し、生成することを学び、今ではチャットボットのように、書かれたテキストを通じて
+人間と対話するために使用することができます。
+
+マイクロソフトは、OpenAIとのパートナーシップを開発し、最近、このモデルを
+Bing検索エンジンに統合しました。Bingにはチャット機能がついており、会話形式で検索エンジンと対話することができます
+。
+
+ケビン・ルースはチャットボットと数時間過ごし、一転して、このモデルに非常に
+奇妙な応答を生成させることに成功し、最終的に彼への愛を宣言しました。ネタバレはしません。
+
+<!---
+
+
+# Developer weekly update: February 13, 2023
+
+Hello devs! Welcome to this week’s edition of developer weekly, where we give you the lowdown on new tools and features
+we’re shipping, new use cases for existing features, and other news and content we found interesting over the past week.
+
+# Quill has a new home
+
+![Header image](../_assets/quill.png)
+
+Quill is a minimalistic ledger and governance toolkit for cold wallets. With Quill, you can generate signed messages
+using self-custody keys that can be stored on an air-gapped device. Those messages can then be transferred to a machine
+with network access where they can be sent to the Internet Computer.
+Previously, we had several forks of quill that served specific use cases. We have made it easier to access all the
+commands you need in one place. Repos like sns-quill and other internal forks have now been consolidated into Quill.
+You can download quill by visiting the releases page.
+
+# Redeploying a canister
+
+![Header image](../_assets/broken-car.png)
+
+If your canister has ever trapped during an upgrade, we realize that can be a pretty frustrating experience. Luckily,
+there is a way out.
+The first thing you can try is uninstalling your canister code. This will delete the WASM from your canister and leave
+it in an empty state. Note - your canister will not be accessible by your users once the WASM has been uninstalled, so
+if you need high uptime, this approach might not be the best for you.
+
+```
+dfx canister uninstall-code [CANISTER NAME or ID]
+```
+
+Of course, use your canister’s actual name or ID when issuing this command.
+
+Once your canister code has been uninstalled, try redeploying. This will build your WASM from source and deploy it into
+your empty canister.
+
+```
+dfx deploy --upgrade-unchanged [CANISTER NAME or ID]
+```
+
+
+Using the `--upgrade-unchanged` flag will force DFX to install your canister WASM and skip checks that compare your new
+WASM to the old one.
+
+> When upgrading a canister, `dfx deploy` and `dfx canister install` skip installing the .wasm
+> if the wasm hash did not change. This avoids a round trip through stable memory for all
+> assets on every dfx deploy, for example. By passing this argument, dfx will instead
+> install the wasm even if its hash matches the already-installed wasm.
+
+We hope this bit of troubleshooting helps you as you build on the Internet Computer!
+
+## ChatGPT getting weird
+
+![Header image](../_assets/chatgpt.png)
+
+In an eerie New York Times article, columnist Kevin Roose has a conversation with the chatbot integrated into the new
+Bing search engine, powered by OpenAI’s ChatGPT.
+For those of you who don’t know, ChatGPT is a language model developed by OpenAI. Essentially, it is a computer program
+that has been trained on a large dataset of human language, such as books, articles, and web pages. Through this
+training, ChatGPT has learned to understand and generate human-like language, and can now be used to interact with
+humans through written text, like a chatbot.
+
+Microsoft has been developing a partnership with OpenAI for sometime and has recently integrated this model into their
+Bing search engine. Bing now comes with a chat feature where you can interact with the search engine in a conversational
+manner.
+
+Kevin Roose spent a couple of hours with the chatbot and in a turn of events, managed to get the model to generate very
+strange responses, and ultimately, declare its love for him. I won’t spoil the read for you.
+
+
+
+-->

@@ -1,0 +1,162 @@
+---
+
+title: Developer weekly update July 20, 2023
+description: This week, we're going to take a look at some new Rust documentation that was published this week, plus we'll dive into the details of dfx 0.15.0 which is now out for beta testing! 
+tags: [Devs]
+image: /img/blog/dev-update-blog-jul-20.jpeg
+---
+# デベロッパーウィークリー - 2023年7月20日号
+
+![July 20 2023](../../static/img/blog/dev-update-blog-jul-20.jpeg)
+
+開発者の皆さん、こんにちは！今週は、今週公開された新しい Rust ドキュメントと、現在ベータテスト中の dfx 0.15.0 の詳細をご紹介します！
+
+それでは本題に入りましょう！
+
+## canisters を Rust でビルドするための新しいドキュメント
+
+canisters 今週、IC開発者向けドキュメントがRust開発者向けに大幅に更新されました！
+
+以前、このセクションには7ページのドキュメントが含まれていましたが、含まれている情報やコンセプトがかなり限られていました。Rust開発者から、これらのページでは十分なリソースを提供できていないというフィードバックをいくつかいただきました。このフィードバックの結果、内部的な洞察も加えて、私たちは、canisters のアップグレード、安定した構造、canister 間の呼び出しなどの概念を含む、15ページのコンテンツを含む改良されたドキュメントのセクションを公開しました。
+
+要約すると、新しい Rust ドキュメントは以下のトピックをカバーしています：
+
+- Rust バックエンドcanister インフラストラクチャ。
+- プロジェクトの構成
+- 開発者環境
+- Rust クイックスタート。
+- canisters の記述とデプロイ。
+- canister 間の呼び出し。
+- canister のアップグレード .
+- rust の最適化canisters.
+- カウンタのインクリメント。
+- 周期タイマーの使用。
+- 安定した構造体
+- 単純なレコードの追加と検索
+- アクセス制御。
+- RustでCandid UIを使うcanister.
+- Rust サンプルコードとアプリケーション。
+
+新しいドキュメントは[こちらから](https://internetcomputer.org/docs/current/developer-docs/backend/rust/)ご覧いただけます。
+
+## dfx 0.15.0ベータリリース
+
+dfx 0.15.0がベータテスト用にリリースされました。この新しいリリースでは、以下のようないくつかの新機能とワークフローが導入されています：
+
+- `dfx nns` と`dfx sns` コマンドは削除されました。両コマンドは**dfx拡張機能**として再構築され、それぞれ`dfx extension install nns` 、`dfx extension install sns` 。dfx拡張機能はまだ開発中であり、正式リリース時には今後のブログ記事で詳しく説明する予定です。
+
+- `dfx replica` と`dfx bootstrap` コマンドは削除されました。代わりに`dfx start` コマンドを使用してください。
+
+- メインネット上で暗号化されていないIDを使用することに関する警告を抑制できるようになりました：
+
+<!-- end list -->
+
+    WARN: The <identity> identity is not stored securely. Do not use it to control a lot of cycles/ICP. Create a new identity with `dfx identity new` and use it in mainnet-facing commands with the `--identity` flag
+    
+    To do so, export the environment variable DFX_WARNING with the value -mainnet_plaintext_identity.
+    
+    export DFX_WARNING="-mainnet_plaintext_identity"
+    Note that this can be combined to also disable the dfx version check warning:
+    
+    export DFX_WARNING="-version_check,-mainnet_plaintext_identity"
+
+- つまり、`/` や空白文字はサポートされなくなりました。サポートされる文字は次のとおりです：
+
+<!-- end list -->
+
+    ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.-_@0123456789.
+
+既存のIDはこの変更の影響を受けません。
+
+dfx 0.15.0のリリースノート全文は、[こちらの変更履歴を](https://github.com/dfinity/sdk/releases/tag/0.15.0-beta.0)ご覧ください。
+
+## Rust Candidとdfxの統合
+
+Rust開発者のエクスペリエンスをさらに向上させるため、Rust Candidライブラリがdfxに統合されました。この統合により、CandidインターフェイスからRustコードとインターフェイスを生成することができます。
+
+将来的には、Rust CandidライブラリもCDKと統合され、同様の機能を実現する予定です。
+
+以上で今週の開発者向けアップデートは終了です。今週はランタイムチームに焦点を当てます！
+
+\-DFINITY
+
+<!---
+
+
+
+# Developer weekly - July 20 2023
+
+![July 20 2023](../../static/img/blog/dev-update-blog-jul-20.jpeg)
+
+Hello developers and welcome to this week's issue of developer weekly! This week, we're going to take a look at some new Rust documentation that was published this week, plus we'll dive into the details of dfx 0.15.0 which is now out for beta testing! 
+
+Let's get into it! 
+
+## New documentation for building canisters with Rust
+
+This week, the IC developer documentation got a major update for Rust developers: a new and improved section on building backend canisters with Rust! 
+
+Previously, this section contained seven pages of documentation that were rather limited in the information and concepts that they contained. We received several bits of feedback from Rust developers that these pages simply weren't providing enough resources for them. As a result of this feedback, along with some internal insight, we've published an improved section of documentation that now contains fifteen pages of content, including concepts such as upgrading canisters, stable structures, and inter-canister calls. 
+
+To summarize, the new Rust documentation covers the following topics:
+
+- Rust backend canister infrastructure.
+- Project organization.
+- Developer environment.
+- Rust quick start.
+- Writing and deploying canisters.
+- Inter-canister calls.
+- Upgrading a canister.
+- Optimizing rust canisters.
+- Incrementing a counter.
+- Using periodic timers.
+- Stable structures.
+- Adding and searching simple records.
+- Access control.
+- Using the Candid UI with a Rust canister.
+- Rust sample code and applications.
+
+You can check out the new documentation [here](https://internetcomputer.org/docs/current/developer-docs/backend/rust/).
+
+## dfx 0.15.0 beta release
+
+dfx 0.15.0 is now available for beta testing. This new release introduces several new features and workflows, such as:
+
+- The `dfx nns` and `dfx sns` commands have been removed. Both commands have been reworked to be **dfx extensions**, and can be used with the commands `dfx extension install nns` and `dfx extension install sns` respectively. dfx extensions are still under development and will be elaborated on fully in a future blog post upon their official release. 
+
+- The `dfx replica` and `dfx bootstrap` commands have been removed. The `dfx start` command should now be used instead.
+
+- Warnings regarding using an unencrypted identity on the mainnet can now be suppressed:
+
+```
+WARN: The <identity> identity is not stored securely. Do not use it to control a lot of cycles/ICP. Create a new identity with `dfx identity new` and use it in mainnet-facing commands with the `--identity` flag
+
+To do so, export the environment variable DFX_WARNING with the value -mainnet_plaintext_identity.
+
+export DFX_WARNING="-mainnet_plaintext_identity"
+Note that this can be combined to also disable the dfx version check warning:
+
+export DFX_WARNING="-version_check,-mainnet_plaintext_identity"
+```
+
+- New identities are now restricted to using 'safe characters', meaning characters such as `/` or whitespace are no longer supported. The supported characters are now:
+
+```
+ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.-_@0123456789.
+```
+
+Existing identities are not affected by this change.
+
+For the full release notes on dfx 0.15.0, please see the [changelog here](https://github.com/dfinity/sdk/releases/tag/0.15.0-beta.0). 
+
+## Integration of Rust Candid with dfx
+
+To further improve the experience for Rust developers, the Rust Candid library has been integrated with dfx. Through this integration, Rust code and interfaces can be generated from a Candid interface. 
+
+In the future, the Rust Candid library will also be integrated with the CDK to achieve similar functionality. 
+
+That'll wrap things up for this week's developer update. Be sure to tune in later this week for our next installment of our team spotlight blog series; this week's focus is on the runtime team! 
+
+-DFINITY 
+
+-->

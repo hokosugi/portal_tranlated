@@ -1,0 +1,207 @@
+---
+
+title: Developer weekly update June 28, 2023
+description: This week, as Q2 comes to a close, we’re going to recap some of the biggest developer enhancements and features that were released over the past three months, plus discuss the new Motoko Dev Server!
+tags: [Devs]
+image: /img/blog/dev-update-blog-jun-3.jpeg
+---
+# 開発者ウィークリー・アップデート 2023年6月28日
+
+![June 28 2023](../../static/img/blog/dev-update-blog-jun-3.jpeg)
+
+開発者の皆さん、こんにちは。今週の開発者ウィークリーへようこそ！
+
+第 2 四半期が終了した今週は、過去 3 か月間にリリースされた開発者向け機能強化のうち最も重要なものをいくつか振り返り、さらに新しいMotoko Dev Server について説明します！
+
+それでは本題に入りましょう！
+
+## 第2四半期のまとめ
+
+2023年第2四半期、SDKチームと言語チームはたくさんの素晴らしい新機能、アップデート、ツールをリリースしました。主なハイライトをいくつかご紹介します：
+
+### Motoko新しい認証ライブラリ: ic-certification
+
+今四半期にリリースされた新しい[ic-certification ライブラリは](https://mops.one/ic-certification)、IC の認証ツリー・データ構造を実装しています。これは、悪意のあるノードから保護するために、canisters からの HTTP レスポンスを検証するために使用されます。ic-certificationライブラリはまた、canister 署名メカニズムの基礎にもなっています。これは、ICに送信されるリクエストにインターネット・アイデンティ ティcanister のようなcanisters が署名するために使用されます。ic-certificationライブラリの開発は、icdevs.orgのバグ報奨金によって賄われました！
+
+### VSCode Candidのオートフォーマットとシンタックスハイライト
+
+Motoko VSCodeエクステンションに、Candidファイルのシンタックスハイライトとオートフォーマット機能が追加されました。これは大きなアップデートではありませんが、生産性を高める目的で開発者の生活の質を向上させるのに役立ちます。
+
+### 開発者フィードバックボード
+
+今期、新しい開発者フィードバックツール「[開発者](https://dx.internetcomputer.org/)フィードバックボード」が開始されました！この掲示板は、開発者のエクスペリエンスを向上させ、優先順位をつけることを目的に、社内のフォーカスグループから得られたフィードバックに応じて開発されました。このグループは、IC開発者に最高のサービスを提供するための1つの方法として、開発者の開発を支援するために開発者が*今*何を必要としているかを把握する必要があると判断しました。また、ICコミュニティは、開発者フォーラムやDiscord のような複数のチャネルにまたがるのではなく、このような意見を一つの場所に集約することを望むという洞察も提供しました。
+
+![Feedback board](../../static/img/blog/feedback_board_1.jpg)
+
+このフィードバックを受けて、私たちは開発者フィードバックボードを立ち上げました。これは、開発者が新機能をリクエストしたり、他の人が提案したものをアップヴォートしたりできるインタラクティブなGUIインターフェイスです。
+
+### dfx 0.14.1
+
+今期はdfxの新しいリリース、0.14.1がリリースされました。このリリースでは、主な機能とアップデートが含まれています：
+
+- 機能: dfx.jsonのgzipオプション。
+- 機能：ic-assetの詳細なロギング。
+- 特徴(Feature)：.envファイルに作成されたすべてのcanister IDが含まれるようになりました。
+- 機能：ユーザがコントローラとして自身を削除する際に同意を求めるようになりました。
+
+これらの新機能に加えて、このリリースでは様々な修正が行われました：
+
+- 修正:`dfx canister delete` が停止していないcanister 上で実行されている場合、dfx は従来のようにエラーを返す代わりにcanister の削除を確認します。
+- 修正: IC SDKのドキュメントが整理されました。
+- 修正: より高価なv2認証の計算を考慮し、コミットバッチがインクリメンタルに行われるようになりました。
+- 修正:`dfx deploy`の動作で、すべてのcanisters に同じ引数を与えることができました。
+- 修正:`dfx canister install`の動作で、空の引数が指定に関係なくすべてのcanisters を呼び出すことができましたが、この動作は削除され、現在はエラーになります。
+- 修正:`dfx start` を使用して dfx を起動する場合、起動後にレプリカが少なくとも一度は 'healthy' ステータスを返さなかった場合、dfx はプロセスを終了して再起動します。
+- 修正: ビットコインのサポートが有効になっている場合、`dfx start` はビットコインcanister をインストールするようになりました。`dfx start` は`networks.json` および`dfx.json` ファイル内のビットコイン設定に新しいフィールド`canister_init_arg` を追加します。
+- 修正:`bitcoin_regtest` 機能が無効になりました。
+- 雑用:`dfx nns import` コマンドによって設定されるローカルのcanister ID に`nns-dapp` と`internet_identity` が追加されました。
+- 雑用：SNS サブコマンドが`dfx help` の出力に表示されるようになりました。
+
+dfx 0.14.1のリリースノートは[こちらから](https://github.com/dfinity/sdk/releases/tag/0.14.1)ダウンロードできます。
+
+### 開発者向けドキュメント
+
+Q2では、開発者向けドキュメントに様々な変更、更新、外観の変更がありました。
+Developer Docs Style Guide の開発と適用。Developer Docs を規格化し、各ページの見た目、感じ、読みやすさが互いに一貫していることを保証するために使用されています。
+ドキュメントの検証と更新。docs の各ページが最新版であり、コマンド、コードブロック、サンプルの最新版を紹介していることを保証するために使用されています。
+
+- 以下のような新しい HTTP outcalls チュートリアル：
+  - [HTTPS outcalls: 技術概要:](https://internetcomputer.org/docs/current/developer-docs/integrations/https-outcalls/https-outcalls-how-it-works)このページは、HTTP outcalls の背後にある技術がどのように動作するかの概要をカバーしています。要約すると、canister が管理canister API を使用して HTTP リクエストを発信すると、リクエストはサブネットのレプリケートされたステート内に一時的に保存されます。その後、各レプリカは外部のウェブサーバーから受け取ったHTTPレスポンスのインスタンスをICのコンセンサスレイヤーを通してプッシュします。これにより、サブネット上の各レプリカは、canister から提供されたHTTPレスポンスに合意することができます。
+  - [HTTPアウトコールの使い方イントロダクション：](https://internetcomputer.org/docs/current/developer-docs/integrations/https-outcalls/https-outcalls-how-to-use)このページでは、HTTPアウトコールの送信に使用されるAPIのハイレベルな概要を説明します。
+  - [HTTP outcalls の使用方法：GET:](https://internetcomputer.org/docs/current/developer-docs/integrations/https-outcalls/https-outcalls-get)このページには、Coinbase API へのリクエストを行うサンプルcanister を使用して GET HTTP リクエストを行う方法を紹介する、Diego Prats による全く新しいチュートリアルが含まれています。このチュートリアルでは、Motoko と Rust の両方の開発ワークフローについて説明しています。
+  - [HTTP アウトコールの使い方](https://internetcomputer.org/docs/current/developer-docs/integrations/https-outcalls/https-outcalls-post)リクエストのヘッダーとボディが正しく送信されたかどうかを検証するために使用される、JSON 情報を含むリクエストを無料の API に送信するサンプルcanister を使用して、[POST](https://internetcomputer.org/docs/current/developer-docs/integrations/https-outcalls/https-outcalls-post)HTTP リクエストを作成する方法を説明します。
+- canister キュー制限、命令制限クエリーコール、Wasm 安定メモリ、サブネット容量など、IC のリソース制約と制限の詳細を説明する新しい[リソース制限と制約のドキュメント](https://internetcomputer.org/docs/current/developer-docs/backend/resource-limits)ページ。
+- 新しい[SNS ドキュメントには](https://internetcomputer.org/docs/current/developer-docs/integrations/sns/)、SNS[資産canisters](https://internetcomputer.org/docs/current/developer-docs/integrations/sns/managing-sns/sns-asset-canister)や新しい[SNS 起動チェックリストに](https://internetcomputer.org/docs/current/developer-docs/integrations/sns/tokenomics/sns-checklist)特化したページを含む、SNS の開発、テスト、起動に関する最新の説明が含まれています。
+
+### 新しい Quill リリース - 0.4.2
+
+今期、Quillの新バージョン[0.4.2が](https://github.com/dfinity/quill/releases)リリースされました。このリリースは主に新しいLedgerサポートの追加に焦点を当て、以前は不可能だったNNS UIとQuillの間で同じキーを共有できるようにしました。
+
+Ledgerのサポートに加え、このリリースには以下のような新機能が追加されています：
+
+- `quill public-ids` に`--subaccount` を追加しました。
+- `--ledger` 経由での Ledger サポートの追加。
+- `--confirmation-text` を`quill sns pay` に追加しました。
+- `quill ckbtc update-balance` で匿名プリンシパルを使用できるように修正。
+- `disburse`,`disburse-maturity`,`split-neuron`,`follow-neuron` を quill sns に追加しました。
+- ジェネシスの投資家のためにDFNアドレスを印刷するオプションを追加しました。
+- 新しいICRC-1アカウントIDフォーマットに更新しました。
+
+Motoko 開発サーバー
+
+今週第2四半期を締めくくるにあたり、開発者向けにもう一つ大きなリリースがあります： Motoko Dev Serverです！
+
+Motoko デブサーバー（mo-dev）は、 ブロックチェーン上の サービスの柔軟で迅速な構築とテストを可能にするために設計されたライブリロードサーバーです。mo-devは、Next.js、Webpack、Viteなどの人気のあるWeb2ライブリロードサーバーのWeb3バージョンとして設計されています。mo-devの特徴と機能は以下の通りです：Internet Computer Motoko 
+
+- コマンドの実行
+- タイプバインディングの生成
+- canisters のデプロイ。
+- ユニットテストの実行
+- 上記の任意の組み合わせ。
+
+詳しくは[Ryan Vandersmith のブログポスト](https://ryanvandersmith.medium.com/20363088afb4)や[mo-dev repo](https://github.com/dfinity/motoko-dev-server) を参照してください。
+
+それではまた来週！
+
+\-DFINITY
+
+<!---
+
+
+# Developer weekly update June 28th 2023
+
+![June 28 2023](../../static/img/blog/dev-update-blog-jun-3.jpeg)
+
+Good afternoon devs and welcome to this week’s issue of developer weekly!
+
+This week, as Q2 comes to a close, we’re going to recap some of the biggest developer enhancements and features that were released over the past three months, plus discuss the new Motoko Dev Server!
+
+Let’s get into it! 
+
+## Q2 recap
+
+During Q2 2023, our SDK and Languages teams shipped a ton of great new features, updates, and tools. Here are some of the biggest highlights:
+
+### Motoko’s new certification library: ic-certification
+
+The new [ic-certification library](https://mops.one/ic-certification) released this quarter implements the IC’s certification tree data structure, which underlies the certified access mechanism on the IC. This is used to validate HTTP responses from canisters in order to protect them against malicious nodes. The ic-certification library also underlies the canister signatures mechanism, which is used to let canisters like the Internet Identity canister sign requests that are sent to the IC. The development of the ic-certification library was funded by an icdevs.org bug bounty, with special work by @nomeata!
+
+### VSCode Candid auto-formatting and syntax highlighting
+
+Additional features were added to the Motoko VSCode extension that include syntax highlighting and auto-formatting for Candid files. While this isn’t a huge update, it helps improve the dev quality of life with the aim to boost productivity. 
+
+### Developer Feedback Board
+
+This quarter, a new developer feedback tool was launched: the [Developer Feedback Board](https://dx.internetcomputer.org/)! This board was developed in response to feedback derived from internal focus groups with the goal to improve and prioritize enhancing the developer experience. This group determined that one way to best serve the IC developers was to figure out what developers need *right now* to aid in their development. The IC community also provided the insight that they’d prefer to have a single place for this input, rather than across multiple channels like the developer forum or Discord. 
+
+![Feedback board](../../static/img/blog/feedback_board_1.jpg)
+
+In response to this feedback, we launched the Developer Feedback Board, an interactive GUI interface where developers can request new features and upvote things that others have suggested that they also would like. 
+
+### dfx 0.14.1
+
+This quarter also saw a new release of dfx - 0.14.1. In this release, the primary features and updates included: 
+- Feature: gzip option in dfx.json.
+- Feature: Detailed logging for ic-asset.
+- Feature: The .env file now includes all created canister IDs.
+- Feature: Users are now asked for consent when they remove themselves as the controller.
+
+In addition to these new features, an array of various fixes have shipped with this release as well:
+
+- Fix: If `dfx canister delete` is running on a canister that has not been stopped, dfx will confirm the removal of the canister instead of returning an error as it had in the past.
+- Fix: The documentation of the IC SDK has been cleaned up.
+- Fix: To account for a more expensive v2 certification calculation, commit batches are now done incrementally to allow larger changes without exceeding the per-message instruction limit.
+- Fix: `dfx deploy`’s behavior previously allowed the same argument to be provided to all canisters; this behavior has been removed and now results in an error.
+- Fix: `dfx canister install`’s behavior previously allowed an empty argument to call all canisters regardless of any specifications; this behavior has been removed and now results in an error.
+- Fix: When starting dfx with `dfx start`, if the replica does not return a ‘healthy’ status at least once after launching, dfx will terminate the process and restart it.
+- Fix: If Bitcoin support is enabled, `dfx start` will now install the Bitcoin canister. `dfx start` will add a new field `canister_init_arg` to the Bitcoin configuration in the `networks.json` and `dfx.json` files.
+- Fix: The `bitcoin_regtest` feature has been disabled.
+- Chore: `nns-dapp` and `internet_identity` have been added to the local canister IDs that are set by the `dfx nns import` command.
+- Chore: SNS subcommands are now visible in the `dfx help` output.
+
+You can download and check out the full dfx 0.14.1 release notes [here](https://github.com/dfinity/sdk/releases/tag/0.14.1).
+
+### Developer docs
+
+In Q2, the developer docs have seen a wide range of changes, updates, and visual alterations. These include:
+The development and application of a Developer Docs Style Guide, which has been used to standardize the Developer Docs and assure each page looks, feels, and reads cohesively to one another. 
+Documentation validation and updates, to assure that each current page of the docs is up to date and showcases the most current version of commands, code blocks, and examples. 
+- New HTTP outcalls tutorials, such as:
+    - [HTTPS outcalls: technology overview:](https://internetcomputer.org/docs/current/developer-docs/integrations/https-outcalls/https-outcalls-how-it-works) this page covers the overview of how the technology behind HTTP outcalls operates. In summary, when a canister makes an outgoing HTTP request using the management canister API, the request is temporarily stored in the replicated state of the subnet. Then, each replica pushes an instance of the received HTTP response from the external web server through the IC’s consensus layer. Through this, each replica on a subnet can agree on the HTTP response that’s been provided by the canister.
+    - [How to use HTTP outcalls: Intro:](https://internetcomputer.org/docs/current/developer-docs/integrations/https-outcalls/https-outcalls-how-to-use) this page provides a high-level overview of the API used to send HTTP outcalls.
+    - [How to use HTTP outcalls: GET:](https://internetcomputer.org/docs/current/developer-docs/integrations/https-outcalls/https-outcalls-get) this page includes a brand new tutorial written by Diego Prats that showcases how to make a GET HTTP request using a sample canister that makes a request to the Coinbase API. This tutorial provides instructions for both Motoko and Rust development workflows.
+    - [How to use HTTP outcalls: POST:](https://internetcomputer.org/docs/current/developer-docs/integrations/https-outcalls/https-outcalls-post) this page is another brand new tutorial written by Diego Prats that explains how to make a POST HTTP request using a sample canister that sends a request with JSON information to a free API that is used to verify that the headers and body of the request were sent properly.
+- A new [resource limits and constraints documentation](https://internetcomputer.org/docs/current/developer-docs/backend/resource-limits) page that details the IC’s resource constraints and limits for things such as canister queue limit, instruction limit query calls, Wasm stable memory, and subnet capacity. 
+- New [SNS documentation](https://internetcomputer.org/docs/current/developer-docs/integrations/sns/), which includes updated instructions for developing, testing, and launching an SNS, including a page dedicated to [SNS asset canisters](https://internetcomputer.org/docs/current/developer-docs/integrations/sns/managing-sns/sns-asset-canister) and a new [SNS launch checklist](https://internetcomputer.org/docs/current/developer-docs/integrations/sns/tokenomics/sns-checklist).
+
+### New Quill release - 0.4.2
+This quarter, a new version of Quill was released; [0.4.2](https://github.com/dfinity/quill/releases). This release primarily focused on adding new Ledger support, enabling the same key to be shared between the NNS UI and Quill, which previously wasn't possible. 
+
+In addition to Ledger support, other new features and additions in this release include:
+
+- Added `--subaccount` to `quill public-ids`.
+- Added Ledger support via `--ledger`.
+- Added `--confirmation-text` to `quill sns pay`.
+- Fixed `quill ckbtc update-balance` allowing the anonymous principal.
+- Added `disburse`, `disburse-maturity`, `split-neuron`, and `follow-neuron` to quill sns.
+- Added option to print DFN address for Genesis investors.
+- Updated to new ICRC-1 account ID format.
+
+Motoko Dev Server
+
+As we wrap up Q2 this week, we have one more huge release for developers: Motoko Dev Server!
+
+Motoko Dev Server, or mo-dev, is a live-reload server designed to enable flexible, quick building and testing of Motoko services on the Internet Computer blockchain. Mo-dev is designed to be a Web3 version of popular Web2 live-reloading servers, like Next.js, Webpack, and Vite. Features and functionality of mo-dev include:
+- Executing commands.
+- Generating type bindings.
+- Deploying canisters.
+- Running unit tests.
+- Any combination of the above.
+
+You can learn more in [Ryan Vandersmith’s blog post](https://ryanvandersmith.medium.com/20363088afb4), or in the [mo-dev repo](https://github.com/dfinity/motoko-dev-server).
+
+That wraps up this edition of developer weekly, see you all next week!
+
+-DFINITY
+
+-->

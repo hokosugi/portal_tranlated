@@ -1,0 +1,133 @@
+---
+
+title: Motoko update January 16, 2023
+description: Today we'll be talking about a new feature that allows you to schedule timers in your code.
+tags: [New features]
+image: /img/blog/motoko-2.png
+authors:
+  - name: Kento Sugama
+---
+# Motoko 更新日：2023年1月16日
+
+![Header image](../_assets/motoko-2.png)
+
+Motoko 開発者の皆さん、
+
+あけましておめでとうございます！
+
+2023年、言語チームは昨年の続きから再開します。
+次に進む前に、SDKチームとの最後の共同投稿を見逃した方は、[こちら](https://forum.dfinity.org/t/sdk-motoko-weekly-update-part-3/17553)
+をご覧ください。要約すると、言語チームは昨年、
+、Motoko ベース・ライブラリの大部分をテストし、文書化することに集中しました。
+
+## 新しい言語機能:Motoko タイマー
+
+![Header image](../_assets/timers.png)
+
+Motoko タイマーを紹介します！これは
+internet computer のタイマー機能に簡単にアクセスできるようにする新しい言語機能です！
+
+この機能にアクセスする最も簡単な方法は、`setTimer`
+と`recurringTimer` を公開している`Timer.mo` ベースライブラリを使うことです。
+
+    setTimer : (d : Duration, job : () -> async ()) -> (id : Nat)
+    recurringTimer : (d : Duration, job : () -> async ()) -> (id : Nat)
+    cancelTimer : (id : Nat) -> ()
+
+将来実行される単発のジョブをスケジュールするには`setTimer` を使用し、これらのジョブを自動的に繰り返すには`recurringTimer` を使用します。
+継続時間はナノ秒単位で指定できます (秒単位の方が便利な場合は秒単位でもかまいません)。
+以前に設定したタイマーを削除するには`cancelTimer` を使います。
+
+canister'のグローバル・タイマーを正確に制御したいパワー・ユーザーであれば、`timer` と呼ばれるシステム関数
+を自分で定義して、超シンプルなメカニズムや精巧にカスタマイズされたメカニズムを確立することができます。
+タイマー関連のコードをcanister 内で避けたい場合は、`-no-timer` フラグを`moc` に渡すことで、
+使わない分の支払いを止めることができます。詳しくは[こちらの](https://github.com/dfinity/motoko/pull/3542)PRディスカッションをご覧ください。
+
+最初の顧客として、Motoko プレイグラウンドはcanister の期限切れを制御するためにタイマーを使用します。
+
+この機能はdfxの次のリリースに含まれる予定ですが、Motoko
+ コンパイラの現在のリリースでも利用可能です。タイマーを楽しんでください！
+
+## 関数: fromIter
+
+![Header image](../_assets/fromiter.png)
+
+## 基本ライブラリ: ドキュメントとテストの改善
+
+言語チームは年末から年始にかけて、
+のテストとベースライブラリのドキュメント作成に励みました！ライブラリの関数にたくさんの説明を追加し、
+実行可能なサンプルも追加しました。また、これらのライブラリモジュールのユニットテスト
+のカバレッジを拡大し、開発者が私たちのモジュールに対してより強い信頼性を得られるようにしました。これらの変更を皆さんにお届けするために、`motoko-base` の
+リリースを間もなくカットする予定です。また、
+ドキュメントの改善とライブラリのテストも続けていきます。
+
+## それではまた次回！
+
+また1週間後に、さらなる機能とアップデートをお届けします。それでは、よいお年をお迎えください！
+
+\-DFINITY 言語チーム
+
+<!---
+
+
+# Motoko update: January 16, 2023
+![Header image](../_assets/motoko-2.png)
+
+Hey Motoko devs,
+
+Happy New Year!
+
+The languages team is back in 2023, hitting the ground running and picking up right where we left off last year. Before
+we move on, if you missed our last joint post with the SDK team, check it
+out [here](https://forum.dfinity.org/t/sdk-motoko-weekly-update-part-3/17553). As a recap, the languages team left off
+last year by focusing on testing and documenting large portions of the Motoko base library.
+
+## New language feature: Motoko timers
+
+![Header image](../_assets/timers.png)
+
+Meet Motoko timers! This is a new language feature that allows you to easily access the timers capability of the
+internet computer that lets you schedule asynchronous jobs for the future!
+
+The most straightforward way to access this feature is through the `Timer.mo` base library, which exposes `setTimer`
+and `recurringTimer`.
+
+```
+setTimer : (d : Duration, job : () -> async ()) -> (id : Nat)
+recurringTimer : (d : Duration, job : () -> async ()) -> (id : Nat)
+cancelTimer : (id : Nat) -> ()
+```
+
+Use `setTimer` to schedule one off jobs that get executed in the future, and `recurringTimer` to auto-repeat these jobs.
+The duration can be given in nanoseconds (or seconds if that is more convenient for you). Use `cancelTimer` to remove a
+previously set timer.
+
+If you’re a power user that wants precise control over the canister's global timer, you can define a system function
+called `timer` yourself, and establish either a super simple or an elaborately customized mechanism. If you want to
+avoid any timer-related code in your canister, you can pass the `-no-timer` flag to `moc` and stop paying for what you
+don't use. See more details in the PR discussion [here](https://github.com/dfinity/motoko/pull/3542).
+
+As a first customer, Motoko playground will use timers to control canister expiration soon.
+
+This feature will be included in the next release of dfx, but is also available in the current release of the Motoko
+compiler. Have fun with timers!
+
+## Function: fromIter
+![Header image](../_assets/fromiter.png)
+
+## Base library: improved documentation and testing
+
+The languages team was hard at work during the end of year and the start of this year, amongst other things, at testing
+and documenting the base library en masse! We’ve added a bunch of descriptions to the library functions, as well as
+runnable examples so devs can quickly figure out how to use the different APIs. We’ve also expanded the unit test
+coverage of these library modules to give developers a stronger level of confidence in our modules. We’ll be cutting a
+release of `motoko-base` soon to get these changes out to you guys, and will also continue to improve the documentation
+and testing of our libraries.
+
+## See you next time!
+
+We'll be back with more features and updates in a week’s time. Happy building and happy new year!
+
+– DFINITY Languages team
+
+-->
